@@ -123,7 +123,7 @@ variable "jenkins_workers_startup_script" {
 
 variable "jenkins_workers_preemptible" {
   description = "Whether to launch Jenkins workers as preemptible instances"
-  default     = false
+  default     = "false"
 }
 
 variable "jenkins_workers_min_cpu_platform" {

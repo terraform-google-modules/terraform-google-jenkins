@@ -28,7 +28,7 @@ locals {
 
 resource "random_string" "jenkins_password" {
   length  = 8
-  special = false
+  special = "false"
 }
 
 data "google_compute_image" "jenkins" {
