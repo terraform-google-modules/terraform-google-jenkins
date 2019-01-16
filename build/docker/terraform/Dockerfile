@@ -15,12 +15,12 @@
 FROM alpine:3.8 as builder
 
 RUN apk add --no-cache \
-        bash=4.4.19-r1 \
-        git=2.18.1-r0 \
-        go=1.10.7-r0 \
-        make=4.2.1-r2 \
-        musl-dev=1.1.19-r10 \
-        openssh-client=7.7_p1-r3
+        bash \
+        git \
+        go \
+        make \
+        musl-dev \
+        openssh-client
 
 ENV APP_BASE_DIR="/cftk"
 
