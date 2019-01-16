@@ -30,7 +30,7 @@ output "jenkins_instance_service_account_email" {
 }
 
 output "jenkins_instance_public_ip" {
-  description = "The private IP of the Jenkins instance"
+  description = "The public IP of the Jenkins instance"
   value       = "${google_compute_instance.jenkins.network_interface.0.access_config.0.nat_ip}"
 }
 
