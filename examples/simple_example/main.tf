@@ -20,13 +20,15 @@ provider "google" {
 }
 
 resource "google_project_service" "cloudresourcemanager" {
-  project = "${var.project_id}"
-  service = "cloudresourcemanager.googleapis.com"
+  project            = "${var.project_id}"
+  service            = "cloudresourcemanager.googleapis.com"
+  disable_on_destroy = "false"
 }
 
 resource "google_project_service" "iam" {
-  project = "${google_project_service.cloudresourcemanager.project}"
-  service = "iam.googleapis.com"
+  project            = "${google_project_service.cloudresourcemanager.project}"
+  service            = "iam.googleapis.com"
+  disable_on_destroy = "false"
 }
 
 data "google_compute_image" "jenkins_agent" {
