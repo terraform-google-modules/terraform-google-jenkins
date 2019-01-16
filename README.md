@@ -96,7 +96,7 @@ The project has the following folders and files:
 - `/helpers`: scripts used in the build process
 - `/templates`: templates used in the provisioning process
 - `/test`: folders with files for testing the module (see Testing section on this file)
-- `/*.tf`: contains all the resources to create
+- `/main.tf`: contains the resources to create
 - `/variables.tf`: all the variables for the module
 - `/output.tf`: the outputs of the module
 - `/README.md`: this file

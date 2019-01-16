@@ -15,8 +15,16 @@
  */
 
 locals {
-  jenkins_startup_script_template = "${file("${path.module}/templates/jenkins_startup_script.sh.tpl")}"
+  jenkins_metadata = {
+    bitnami-base-password  = "${local.jenkins_password}"
+    status-uptime-deadline = 420
+    startup-script         = "${data.template_file.jenkins_startup_script.rendered}"
+  }
 
+  jenkins_password = "${coalesce(var.jenkins_initial_password, random_string.jenkins_password.result)}"
+  jenkins_startup_script_template = "${file("${path.module}/templates/jenkins_startup_script.sh.tpl")}"
+  jenkins_tags     = ["${var.jenkins_instance_network_tag}"]
+  jenkins_username = "user"
   jenkins_workers_agent_attach_script = <<EOF
 #!/bin/bash
 apt-get install -y -qq wget
@@ -24,13 +32,26 @@ cd /tmp
 wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.9/swarm-client-3.9.jar
 java -jar ./swarm-client-3.9.jar -username ${local.jenkins_username} -password ${local.jenkins_password} -master "http://<PRIVATE_IP>/jenkins/"
 EOF
-
+  jenkins_workers_project_url = "https://www.googleapis.com/compute/v1/projects/${var.jenkins_workers_project_id}"
   jenkins_workers_startup_script = <<EOF
 ${local.jenkins_workers_agent_attach_script}
 ${var.jenkins_workers_startup_script}
 EOF
+}
 
-  jenkins_workers_project_url = "https://www.googleapis.com/compute/v1/projects/${var.jenkins_workers_project_id}"
+resource "random_string" "jenkins_password" {
+  length  = 8
+  special = "false"
+}
+
+data "google_compute_image" "jenkins" {
+  name    = "bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64"
+  project = "bitnami-launchpad"
+}
+
+data "google_compute_image" "jenkins_worker" {
+  name    = "${var.jenkins_workers_boot_disk_source_image}"
+  project = "${var.jenkins_workers_boot_disk_source_image_project}"
 }
 
 data "template_file" "jenkins_startup_script" {
@@ -64,4 +85,45 @@ data "template_file" "jenkins_startup_script" {
     jenkins_workers_num_executors                  = "${var.jenkins_workers_num_executors}"
     jobs_as_b64_json                               = "${base64encode(jsonencode(var.jenkins_jobs))}"
   }
+}
+
+resource "google_compute_instance" "jenkins" {
+  project      = "${var.project_id}"
+  name         = "${var.jenkins_instance_name}"
+  machine_type = "${var.jenkins_instance_machine_type}"
+  zone         = "${var.jenkins_instance_zone}"
+
+  tags = "${concat(local.jenkins_tags, var.jenkins_instance_additional_tags)}"
+
+  boot_disk {
+    initialize_params {
+      image = "${data.google_compute_image.jenkins.self_link}"
+    }
+  }
+
+  network_interface {
+    subnetwork         = "${var.jenkins_instance_subnetwork}"
+    subnetwork_project = "${var.project_id}"
+
+    access_config {}
+  }
+
+  metadata = "${merge(local.jenkins_metadata, var.jenkins_instance_additional_metadata)}"
+
+  service_account {
+    email = "${google_service_account.jenkins.email}"
+
+    scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/devstorage.full_control",
+    ]
+  }
+}
+
+resource "null_resource" "wait_for_jenkins_configuration" {
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/wait-for-jenkins.sh ${var.project_id} ${var.jenkins_instance_zone} ${var.jenkins_instance_name}"
+  }
+
+  depends_on = ["google_compute_instance.jenkins"]
 }
