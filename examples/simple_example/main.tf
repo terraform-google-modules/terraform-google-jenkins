@@ -40,7 +40,7 @@ resource "google_storage_bucket" "artifacts" {
 }
 
 data "local_file" "example_job_template" {
-  filename = "${path.module}/data/example_job.xml.tpl"
+  filename = "${path.module}/templates/example_job.xml.tpl"
 }
 
 data "template_file" "example_job" {

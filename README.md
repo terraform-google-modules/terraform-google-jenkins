@@ -92,9 +92,9 @@ Be sure you have the correct Terraform version (0.10.x), you can choose the bina
 The project has the following folders and files:
 
 - `/`: root folder
-- `/data`: templates and files used in the provisioning process
 - `/examples`: examples for using this module
 - `/helpers`: scripts used in the build process
+- `/templates`: templates used in the provisioning process
 - `/test`: folders with files for testing the module (see Testing section on this file)
 - `/*.tf`: contains all the resources to create
 - `/variables.tf`: all the variables for the module

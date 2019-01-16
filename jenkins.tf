@@ -15,7 +15,7 @@
  */
 
 locals {
-  jenkins_startup_script_template = "${file("${path.module}/data/jenkins_startup_script.sh.tpl")}"
+  jenkins_startup_script_template = "${file("${path.module}/templates/jenkins_startup_script.sh.tpl")}"
 
   jenkins_workers_agent_attach_script = <<EOF
 #!/bin/bash
