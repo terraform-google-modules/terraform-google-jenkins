@@ -46,4 +46,4 @@ crash.log
 
 credentials.json
 
-examples/*/ssh/key
+test/fixtures/*/ssh/key
