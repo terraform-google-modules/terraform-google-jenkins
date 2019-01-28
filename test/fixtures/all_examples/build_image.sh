@@ -16,6 +16,7 @@
 #############################################
 # Install fixture data into an example case #
 #############################################
+set -e
 BASEDIR=$(dirname "$0")
 EXAMPLE=${1}
 

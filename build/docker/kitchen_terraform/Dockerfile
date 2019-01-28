@@ -61,4 +61,11 @@ RUN bundle install
 
 RUN gcloud components install beta --quiet
 
+RUN cd /tmp && \
+    wget https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_linux_amd64.zip && \
+    unzip packer_1.3.3_linux_amd64.zip && \
+    rm -rf packer_1.3.3_linux_amd64.zip && \
+    mv packer $APP_BASE_DIR/bin/ && \
+    packer --version
+
 WORKDIR $APP_BASE_DIR/workdir
