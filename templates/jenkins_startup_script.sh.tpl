@@ -2,96 +2,6 @@
 
 set -e
 
-metadata_value() {
-  curl --retry 5 -sfH "Metadata-Flavor: Google" \
-    "http://metadata/computeMetadata/v1/$$1"
-}
-
-uptime_seconds() {
-  seconds="$$(cat /proc/uptime | cut -d' ' -f1)"
-  echo $${seconds%%.*}  # delete floating point.
-}
-
-uptime_deadline() {
-  metadata_value "instance/attributes/status-uptime-deadline" \
-    || echo $$DEFAULT_UPTIME_DEADLINE
-}
-
-# The contents of initScript are contained within this function.
-custom_init() (
-  return 0
-)
-
-# The contents of checkScript are contained within this function.
-check_success() (
-  failed=$$(/etc/init.d/bitnami status \
-    | grep "not running" | cut -d" " -f1 | tr "\n" " ")
-  if [ ! -z "$$failed" ]; then
-    echo "Processes failed to start: $$failed"
-    exit 1
-  fi
-)
-
-check_success_with_retries() {
-  deadline="$$(uptime_deadline)"
-  while [ "$$(uptime_seconds)" -lt "$$deadline" ]; do
-    message=$$(check_success)
-    case $$? in
-      0)
-        # Success.
-        return 0
-        ;;
-      1)
-        # Not ready; continue loop
-        ;;
-      *)
-        # Failure; abort.
-        echo $$message
-        return 1
-        ;;
-    esac
-
-    sleep 5
-  done
-
-  # The check was not successful within the required deadline.
-  echo "status check timeout"
-  return 1
-}
-
-do_init() {
-  # Run the init script first. If no init script was specified, this
-  # is a no-op.
-  echo "software-status: initializing..."
-
-  set +e
-  message="$$(custom_init)"
-  result=$$?
-  set -e
-
-  if [ $$result -ne 0 ]; then
-    echo "software-status: init failure"
-    return 1
-  fi
-}
-
-do_check() {
-  # Poll for success.
-  echo "software-status: waiting for software to become ready..."
-  set +e
-  message="$$(check_success_with_retries)"
-  result=$$?
-  set -e
-
-  if [ $$result -eq 0 ]; then
-    echo "software-status: success"
-    configure_jenkins
-    echo "software-status configuration: success"
-  else
-    echo "software-status: failed with message: $$message"
-  fi
-}
-
 function get_jenkins_auth_code() {
   USERNAME="${jenkins_username}"
   PASSWORD="${jenkins_password}"
@@ -99,8 +9,8 @@ function get_jenkins_auth_code() {
   _last_exit_code=1
   echo "Waiting for Jenkins to come online..."
   while [ "$${_last_exit_code}" != "0" ]; do
-    JENKINS_AUTH_CRUMB=$$(wget -q --auth-no-challenge --user "$${USERNAME}" --password "$${PASSWORD}" --output-document - 'http://localhost/jenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
-    _last_exit_code=$$?
+    JENKINS_AUTH_CRUMB=$(wget -q --auth-no-challenge --user "$${USERNAME}" --password "$${PASSWORD}" --output-document - 'http://localhost/jenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
+    _last_exit_code=$?
     sleep 5
   done
 
@@ -109,6 +19,11 @@ function get_jenkins_auth_code() {
 
 install_system_dependencies() {
   echo "Installing system dependencies"
+  while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
+    echo "Waiting for apt to finish..."
+    sleep 0.5
+  done
+  echo "Apt finished; continuing..."
   apt-get install -y -qq python-pip
 }
 
@@ -384,36 +299,25 @@ touch_setup_complete_file() {
   touch /tmp/instance_setup_complete
 }
 
-configure_jenkins() {
-  echo "Configuring Jenkins"
+echo "Configuring Jenkins"
 
-  enable_jenkins_cli
-  generate_ssh_key
-  install_ssh_key
-  install_system_dependencies
-  install_python_dependencies
-  skip_jenkins_install_wizard
+enable_jenkins_cli
+generate_ssh_key
+install_ssh_key
+install_system_dependencies
+install_python_dependencies
+skip_jenkins_install_wizard
 
-  download_jenkins_cli
-  install_jenkins_plugins
+download_jenkins_cli
+install_jenkins_plugins
 
-  install_gce_credentials
-  install_gce_plugin_configuration
-  install_jenkins_jobs
+install_gce_credentials
+install_gce_plugin_configuration
+install_jenkins_jobs
 
-  uninstall_ssh_key
-  disable_jenkins_cli
+uninstall_ssh_key
+disable_jenkins_cli
 
-  touch_setup_complete_file
+touch_setup_complete_file
 
-  echo "Done configuring Jenkins"
-}
-
-# Run the initialization script synchronously.
-do_init || exit $$?
-
-# The actual software initialization might come after google's init.d
-# script that executes our startup script. Thus, launch this script
-# into the background so that it does not block init and eventually
-# timeout while waiting for software to start.
-do_check & disown
+echo "software-status configuration: success"
