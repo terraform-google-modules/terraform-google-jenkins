@@ -45,8 +45,8 @@ resource "random_string" "jenkins_password" {
 }
 
 data "google_compute_image" "jenkins" {
-  name    = "bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64"
-  project = "bitnami-launchpad"
+  name    = "${var.jenkins_boot_disk_source_image}"
+  project = "${var.jenkins_boot_disk_source_image_project}"
 }
 
 data "google_compute_image" "jenkins_worker" {

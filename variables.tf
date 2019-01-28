@@ -32,6 +32,16 @@ variable "jenkins_instance_machine_type" {
   default     = "n1-standard-4"
 }
 
+variable "jenkins_boot_disk_source_image" {
+  description = "The name of the disk image to use as the boot disk for the Jenkins master"
+  default     = "bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64"
+}
+
+variable "jenkins_boot_disk_source_image_project" {
+  description = "The project within which the disk image to use as the Jenkins master boot disk exists"
+  default     = "bitnami-launchpad"
+}
+
 variable "jenkins_instance_zone" {
   description = "The zone to deploy the Jenkins VM in"
 }
