@@ -20,40 +20,40 @@ resource "google_service_account" "jenkins" {
   display_name = "${var.jenkins_service_account_display_name}"
 }
 
-resource "google_project_iam_binding" "jenkins-instance_admin_v1" {
+resource "google_project_iam_member" "jenkins-instance_admin_v1" {
   project = "${var.project_id}"
   role    = "roles/compute.instanceAdmin.v1"
-  members = ["serviceAccount:${google_service_account.jenkins.email}"]
+  member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
-resource "google_project_iam_binding" "jenkins-instance_admin" {
+resource "google_project_iam_member" "jenkins-instance_admin" {
   project = "${var.project_id}"
   role    = "roles/compute.instanceAdmin"
-  members = ["serviceAccount:${google_service_account.jenkins.email}"]
+  member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
-resource "google_project_iam_binding" "jenkins-network_admin" {
+resource "google_project_iam_member" "jenkins-network_admin" {
   project = "${var.project_id}"
   role    = "roles/compute.networkAdmin"
-  members = ["serviceAccount:${google_service_account.jenkins.email}"]
+  member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
-resource "google_project_iam_binding" "jenkins-security_admin" {
+resource "google_project_iam_member" "jenkins-security_admin" {
   project = "${var.project_id}"
   role    = "roles/compute.securityAdmin"
-  members = ["serviceAccount:${google_service_account.jenkins.email}"]
+  member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
-resource "google_project_iam_binding" "jenkins-service_account_actor" {
+resource "google_project_iam_member" "jenkins-service_account_actor" {
   project = "${var.project_id}"
   role    = "roles/iam.serviceAccountActor"
-  members = ["serviceAccount:${google_service_account.jenkins.email}"]
+  member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
-resource "google_project_iam_binding" "jenkins-service_account_user" {
+resource "google_project_iam_member" "jenkins-service_account_user" {
   project = "${var.project_id}"
   role    = "roles/iam.serviceAccountUser"
-  members = ["serviceAccount:${google_service_account.jenkins.email}"]
+  member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
 resource "google_storage_bucket_iam_member" "jenkins-upload" {
