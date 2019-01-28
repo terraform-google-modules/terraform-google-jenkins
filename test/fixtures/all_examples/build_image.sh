@@ -29,7 +29,7 @@ if [ ! -d "${BASEDIR}/../../../examples/${EXAMPLE}" ]; then
   exit 1
 fi
 
-_project_id=$(grep project_id "${BASEDIR}/../../../test/fixtures/networks/terraform.tfvars" | cut -d= -f2 | cut -d\" -f2)
+_project_id=$(grep project_id "${BASEDIR}/../../../test/fixtures/shared/terraform.tfvars" | cut -d= -f2 | cut -d\" -f2)
 
 _example_path="${BASEDIR}/../../../examples/${EXAMPLE}"
 if [ -d "${_example_path}/packer" ]; then
