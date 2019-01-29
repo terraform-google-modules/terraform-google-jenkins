@@ -27,7 +27,7 @@ This example includes a [packer](https://www.packer.io) manifest for building a 
 | jenkins_instance_initial_password | The initial password for the `user` user on the Jenkins master |
 | jenkins_instance_name | The name of the Jenkins master in GCP |
 | jenkins_instance_public_ip | The public IP address of the Jenkins master |
-| jenkins_instance_zone |  |
+| jenkins_instance_zone | The GCP zone the Jenkins instance was launched into |
 
 [^]: (autogen_docs_end)
 
