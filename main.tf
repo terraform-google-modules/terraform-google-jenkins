@@ -118,7 +118,7 @@ resource "google_compute_instance" "jenkins" {
 
     scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/devstorage.full_control",
+      "https://www.googleapis.com/auth/devstorage.read_write",
     ]
   }
 }
