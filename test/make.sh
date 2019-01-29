@@ -97,15 +97,3 @@ function generate_docs() {
   done
   rm -f "$TMPFILE"
 }
-
-function prepare_test_variables() {
-  echo "Preparing terraform.tfvars files for integration tests"
-  #shellcheck disable=2044
-  for i in $(find ./test/fixtures -type f -name terraform.tfvars.sample); do
-    destination=${i/%.sample/}
-    if [ ! -f "${destination}" ]; then
-      cp "${i}" "${destination}"
-      echo "${destination} has been created. Please edit it to reflect your GCP configuration."
-    fi
-  done
-}
