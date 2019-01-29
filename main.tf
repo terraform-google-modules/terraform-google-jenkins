@@ -21,10 +21,11 @@ locals {
     startup-script         = "${data.template_file.jenkins_startup_script.rendered}"
   }
 
-  jenkins_password = "${coalesce(var.jenkins_initial_password, random_string.jenkins_password.result)}"
+  jenkins_password                = "${coalesce(var.jenkins_initial_password, random_string.jenkins_password.result)}"
   jenkins_startup_script_template = "${file("${path.module}/templates/jenkins_startup_script.sh.tpl")}"
-  jenkins_tags     = ["${var.jenkins_instance_network_tag}"]
-  jenkins_username = "user"
+  jenkins_tags                    = ["${var.jenkins_instance_network_tag}"]
+  jenkins_username                = "user"
+
   jenkins_workers_agent_attach_script = <<EOF
 #!/bin/bash
 apt-get install -y -qq wget
@@ -32,7 +33,9 @@ cd /tmp
 wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.9/swarm-client-3.9.jar
 java -jar ./swarm-client-3.9.jar -username ${local.jenkins_username} -password ${local.jenkins_password} -master "http://<PRIVATE_IP>/jenkins/"
 EOF
+
   jenkins_workers_project_url = "https://www.googleapis.com/compute/v1/projects/${var.jenkins_workers_project_id}"
+
   jenkins_workers_startup_script = <<EOF
 ${local.jenkins_workers_agent_attach_script}
 ${var.jenkins_workers_startup_script}

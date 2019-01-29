@@ -33,7 +33,7 @@ control "jenkins" do
       end
 
       it "sets the launch zone of workers to the correct zone" do
-        expect(config.at_xpath('//clouds/*/configurations/*/zone').children[0].text).to match "us-east-4a"
+        expect(config.at_xpath('//clouds/*/configurations/*/zone').children[0].text).to end_with "/us-east4-a"
       end
     end
   end

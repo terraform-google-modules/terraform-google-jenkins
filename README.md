@@ -1,17 +1,21 @@
 # Terraform Jenkins GCE Module
 
-This module handles the creation of a GCE instance running [Jenkins](https://jenkins.io/), configured to [run builds on Google Cloud](https://cloud.google.com/solutions/using-jenkins-for-distributed-builds-on-compute-engine).
+This module handles the creation of a GCE instance running [Jenkins](https://jenkins.io/), configured to [run builds on Google Cloud](https://cloud.google.com/solutions/using-jenkins-for-distributed-builds-on-compute-engine). Creates an instance that can be logged into with the username `user` and the password `bitnami`.
 
 ## Usage
 
 Please see the [examples](./examples/) folder.
 
 [^]: (autogen_docs_start)
+
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | gcs_bucket | The name of an existing GCS bucket to associate with the created service account, allowing build artifacts to be uploaded. Leave blank to skip | string | `` | no |
+| jenkins_boot_disk_source_image | The name of the disk image to use as the boot disk for the Jenkins master | string | `bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64` | no |
+| jenkins_boot_disk_source_image_project | The project within which the disk image to use as the Jenkins master boot disk exists | string | `bitnami-launchpad` | no |
 | jenkins_initial_password | The initial password to protect Jenkins logins with. Defaults to a random 8-character alphanumeric string. This may not contain special characters. | string | `` | no |
 | jenkins_instance_access_cidrs | CIDRs to allow to access Jenkins over HTTP(s) | list | `<list>` | no |
 | jenkins_instance_additional_metadata | Additional instance metadata to assign to the Jenkins VM | map | `<map>` | no |
@@ -26,7 +30,7 @@ Please see the [examples](./examples/) folder.
 | jenkins_service_account_display_name | The display name of the service account to create for Jenkins VM provisioning | string | `Jenkins` | no |
 | jenkins_service_account_name | The name of the service account to create for Jenkins VM provisioning | string | `jenkins` | no |
 | jenkins_workers_boot_disk_size_gb | The size of Jenkins worker boot disks, in gigabytes | string | `10` | no |
-| jenkins_workers_boot_disk_source_image | The fully qualified URL to the disk image to use as the boot disk for Jenkins workers | string | `https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1604-xenial-v20181023` | no |
+| jenkins_workers_boot_disk_source_image | The fully qualified URL to the disk image to use as the boot disk for Jenkins workers | string | `ubuntu-1604-xenial-v20181023` | no |
 | jenkins_workers_boot_disk_source_image_project | The project within which the disk image to use as the Jenkins worker boot disk exists | string | `ubuntu-os-cloud` | no |
 | jenkins_workers_boot_disk_type | The boot disk type to associate with Jenkins workers. Valid options are 'local-ssd', 'pd-ssd', and 'pd-standard' | string | `pd-ssd` | no |
 | jenkins_workers_description | A description of the Jenkins worker cloud to show in Jenkins | string | `Jenkins worker` | no |
@@ -41,13 +45,13 @@ Please see the [examples](./examples/) folder.
 | jenkins_workers_num_executors | The number of concurrent jobs that can run on each Jenkins worker | string | `1` | no |
 | jenkins_workers_preemptible | Whether to launch Jenkins workers as preemptible instances | string | `false` | no |
 | jenkins_workers_project_id | The GCP project to deploy Jenkins workers within | string | - | yes |
-| jenkins_workers_region | The name of the region into which to deploy Jenkins workers | string | `us-east-4` | no |
+| jenkins_workers_region | The name of the region into which to deploy Jenkins workers | string | `us-east4` | no |
 | jenkins_workers_retention_time_minutes | The number of minutes for Jenkins workers to remain online after completing their last job | string | `6` | no |
 | jenkins_workers_run_as_user | The user to run Jenkins jobs as on workers | string | `ubuntu` | no |
 | jenkins_workers_service_account_email | The service account email to assign to Jenkins workers. Leave blank for the default compute service account | string | `` | no |
 | jenkins_workers_startup_script | Any additional configuration to run on boot of Jenkins workers | string | `` | no |
 | jenkins_workers_subnetwork | The name of the subnetwork to deploy Jenkins workers into | string | `default` | no |
-| jenkins_workers_zone | The name of the zone into which to deploy Jenkins workers | string | `us-east-4b` | no |
+| jenkins_workers_zone | The name of the zone into which to deploy Jenkins workers | string | `us-east4-b` | no |
 | project_id | The project ID to deploy to | string | - | yes |
 | region | The region to deploy to | string | - | yes |
 
@@ -56,11 +60,10 @@ Please see the [examples](./examples/) folder.
 | Name | Description |
 |------|-------------|
 | jenkins_instance_initial_password | The initial password assigned to the Jenkins instance's `user` username |
-| jenkins_instance_name |  |
-| jenkins_instance_public_ip | The private IP of the Jenkins instance |
-| jenkins_instance_service_account_email |  |
-| jenkins_instance_zone |  |
-
+| jenkins_instance_name | The name of the running Jenkins instance |
+| jenkins_instance_public_ip | The public IP of the Jenkins instance |
+| jenkins_instance_service_account_email | The email address of the created service account |
+| jenkins_instance_zone | The zone in which Jenkins is running |
 
 [^]: (autogen_docs_end)
 

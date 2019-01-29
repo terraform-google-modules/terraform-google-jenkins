@@ -37,8 +37,9 @@ data "google_compute_image" "jenkins_agent" {
 }
 
 resource "google_storage_bucket" "artifacts" {
-  name    = "${var.project_id}-jenkins-artifacts"
-  project = "${var.project_id}"
+  name          = "${var.project_id}-jenkins-artifacts"
+  project       = "${var.project_id}"
+  force_destroy = true
 }
 
 data "local_file" "example_job_template" {
@@ -96,9 +97,9 @@ module "jenkins-gce" {
   jenkins_instance_network_tag                   = "jenkins"
   jenkins_instance_additional_metadata           = "${var.jenkins_instance_metadata}"
   jenkins_workers_project_id                     = "${google_project_service.iam.project}"
-  jenkins_workers_zone                           = "us-east-4a"
-  jenkins_workers_machine_type                   = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/us-east-4a/machineTypes/n1-standard-1"
-  jenkins_workers_boot_disk_type                 = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/us-east-4a/diskTypes/pd-ssd"
+  jenkins_workers_zone                           = "us-east4-a"
+  jenkins_workers_machine_type                   = "n1-standard-1"
+  jenkins_workers_boot_disk_type                 = "pd-ssd"
   jenkins_workers_network                        = "${var.network}"
   jenkins_workers_network_tags                   = ["jenkins-agent"]
   jenkins_workers_boot_disk_source_image         = "${data.google_compute_image.jenkins_agent.name}"

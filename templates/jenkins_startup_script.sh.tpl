@@ -6,15 +6,18 @@ function get_jenkins_auth_code() {
   USERNAME="${jenkins_username}"
   PASSWORD="${jenkins_password}"
 
+  set +e
   _last_exit_code=1
-  echo "Waiting for Jenkins to come online..."
+  echo "Waiting for Jenkins to come online"
   while [ "$${_last_exit_code}" != "0" ]; do
+    printf '.'
     JENKINS_AUTH_CRUMB=$(wget -q --auth-no-challenge --user "$${USERNAME}" --password "$${PASSWORD}" --output-document - 'http://localhost/jenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
     _last_exit_code=$?
     sleep 5
   done
+  set -e
 
-  echo "Jenkins is online; proceeding"
+  echo "\nJenkins is online; proceeding"
 }
 
 install_system_dependencies() {
