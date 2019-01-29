@@ -75,8 +75,6 @@ Please see the [examples](./examples/) folder.
 ### Configure a Service Account
 In order to execute this module you must have a Service Account with the following project roles:
 
-#### Roles
-The service account with the following roles:
 - roles/compute.viewer
 - roles/iam.serviceAccountUser
 
