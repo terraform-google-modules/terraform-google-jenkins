@@ -18,7 +18,7 @@ variable "project_id" {
   description = "The GCP project ID to run tests in"
 }
 
-variable "credentials_path_relative" {
+variable "credentials_path" {
   description = "The relative path (from this directory) of the GCP credentials file to use for test runs"
 }
 

@@ -15,7 +15,7 @@
  */
 
 locals {
-  credentials_path = "${path.module}/${var.credentials_path_relative}"
+  credentials_path = "${path.module}/${var.credentials_path}"
   example_name     = "simple-example"
 }
 
