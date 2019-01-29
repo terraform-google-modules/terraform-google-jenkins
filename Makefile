@@ -114,7 +114,7 @@ docker_run:
 		/bin/bash
 
 .PHONY: docker_create
-docker_create: docker_build_kitchen_terraform
+docker_create:
 	docker run --rm -it \
 		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
 		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
