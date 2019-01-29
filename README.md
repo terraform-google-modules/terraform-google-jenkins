@@ -126,7 +126,7 @@ The test-kitchen instances in `test/fixtures/` wrap identically-named examples i
 
 #### Setup
 
-1. Configure the ...
+1. Configure the [test fixtures](#test-configuration)
 2. Download a Service Account key with the necessary permissions and put it in the module's root directory with the name `credentials.json`.
 3. Build the Docker containers for testing:
 
@@ -151,7 +151,7 @@ Alternatively, you can simply run `CREDENTIALS_FILE="credentials.json" make test
 
 #### Test configuration
 
-Each test-kitchen instance is configured with a `terraform.tfvars` file in the test fixture directory, e.g. `test/fixtures/node_pool/terraform.tfvars`.
+Each test-kitchen instance is configured with a `terraform.tfvars` file in the test fixture directory, e.g. `test/fixtures/simple_example/terraform.tfvars`.
 For convenience, these files have been symlinked to `test/fixtures/shared/terraform.tfvars`.
 Similarly, each test fixture has a `variables.tf` to define these variables, and an `outputs.tf` to facilitate providing necessary information for `inspec` to locate and query against created resources.
 
