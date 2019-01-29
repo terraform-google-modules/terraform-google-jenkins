@@ -12,7 +12,8 @@
       "disk_size": "10",
       "image_name": "jenkins-agent-{{timestamp}}",
       "image_family": "jenkins-agent",
-      "ssh_username": "ubuntu"
+      "ssh_username": "ubuntu",
+      "disable_default_service_account": true
     }
   ],
   "provisioners": [
