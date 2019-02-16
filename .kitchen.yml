@@ -34,6 +34,7 @@ suites:
       root_module_directory: test/fixtures/simple_example
     verifier:
       name: terraform
+      color: false
       systems:
         - name: simple_example
           backend: gcp
