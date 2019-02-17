@@ -26,18 +26,10 @@ locals {
   jenkins_tags                    = ["${var.jenkins_instance_network_tag}"]
   jenkins_username                = "user"
 
-  jenkins_workers_agent_attach_script = <<EOF
-#!/bin/bash
-apt-get install -y -qq wget
-cd /tmp
-wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.9/swarm-client-3.9.jar
-java -jar ./swarm-client-3.9.jar -username ${local.jenkins_username} -password ${local.jenkins_password} -master "http://<PRIVATE_IP>/jenkins/"
-EOF
-
   jenkins_workers_project_url = "https://www.googleapis.com/compute/v1/projects/${var.jenkins_workers_project_id}"
 
   jenkins_workers_startup_script = <<EOF
-${local.jenkins_workers_agent_attach_script}
+${data.template_file.jenkins_workers_agent_startup_script.rendered}
 ${var.jenkins_workers_startup_script}
 EOF
 }
@@ -55,6 +47,15 @@ data "google_compute_image" "jenkins" {
 data "google_compute_image" "jenkins_worker" {
   name    = "${var.jenkins_workers_boot_disk_source_image}"
   project = "${var.jenkins_workers_boot_disk_source_image_project}"
+}
+
+data "template_file" "jenkins_workers_agent_startup_script" {
+  template = "${file("${path.module}/templates/jenkins_workers_agent_startup_script.sh.tpl")}"
+
+  vars {
+    jenkins_username = "${local.jenkins_username}"
+    jenkins_password = "${local.jenkins_password}"
+  }
 }
 
 data "template_file" "jenkins_startup_script" {
