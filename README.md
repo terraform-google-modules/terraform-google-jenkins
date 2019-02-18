@@ -19,12 +19,11 @@ Please see the [examples](./examples/) folder.
 | jenkins_initial_password | The initial password to protect Jenkins logins with. Defaults to a random 8-character alphanumeric string. This may not contain special characters. | string | `` | no |
 | jenkins_instance_access_cidrs | CIDRs to allow to access Jenkins over HTTP(s) | list | `<list>` | no |
 | jenkins_instance_additional_metadata | Additional instance metadata to assign to the Jenkins VM | map | `<map>` | no |
-| jenkins_instance_additional_tags | Additional tags to assign to the Jenkins VM | list | `<list>` | no |
 | jenkins_instance_machine_type | The machine type to provision for Jenkins | string | `n1-standard-4` | no |
 | jenkins_instance_name | The name to assign to the Jenkins VM | string | `jenkins` | no |
 | jenkins_instance_network | The GCP network to deploy the Jenkins VM in | string | - | yes |
-| jenkins_instance_network_tag | The name of the tag to associate with the Jenkins instance. Useful if the default is already used in your GCP project | string | `jenkins` | no |
 | jenkins_instance_subnetwork | The GCP subnetwork to deploy the Jenkins VM in | string | - | yes |
+| jenkins_instance_tags | Tags to assign to the Jenkins VM | list | `<list>` | no |
 | jenkins_instance_zone | The zone to deploy the Jenkins VM in | string | - | yes |
 | jenkins_jobs | A list of Jenkins jobs to configure on the instance | string | `<list>` | no |
 | jenkins_service_account_display_name | The display name of the service account to create for Jenkins VM provisioning | string | `Jenkins` | no |

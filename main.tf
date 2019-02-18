@@ -23,7 +23,6 @@ locals {
 
   jenkins_password                = "${coalesce(var.jenkins_initial_password, random_string.jenkins_password.result)}"
   jenkins_startup_script_template = "${file("${path.module}/templates/jenkins_startup_script.sh.tpl")}"
-  jenkins_tags                    = ["${var.jenkins_instance_network_tag}"]
   jenkins_username                = "user"
 
   jenkins_workers_project_url = "https://www.googleapis.com/compute/v1/projects/${var.jenkins_workers_project_id}"
@@ -97,7 +96,7 @@ resource "google_compute_instance" "jenkins" {
   machine_type = "${var.jenkins_instance_machine_type}"
   zone         = "${var.jenkins_instance_zone}"
 
-  tags = "${concat(local.jenkins_tags, var.jenkins_instance_additional_tags)}"
+  tags = "${var.jenkins_instance_tags}"
 
   boot_disk {
     initialize_params {

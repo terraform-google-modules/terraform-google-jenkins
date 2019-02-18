@@ -54,9 +54,9 @@ variable "jenkins_instance_subnetwork" {
   description = "The GCP subnetwork to deploy the Jenkins VM in"
 }
 
-variable "jenkins_instance_additional_tags" {
+variable "jenkins_instance_tags" {
   type        = "list"
-  description = "Additional tags to assign to the Jenkins VM"
+  description = "Tags to assign to the Jenkins VM"
   default     = []
 }
 
@@ -64,11 +64,6 @@ variable "jenkins_instance_additional_metadata" {
   type        = "map"
   description = "Additional instance metadata to assign to the Jenkins VM"
   default     = {}
-}
-
-variable "jenkins_instance_network_tag" {
-  description = "The name of the tag to associate with the Jenkins instance. Useful if the default is already used in your GCP project"
-  default     = "jenkins"
 }
 
 variable "jenkins_initial_password" {

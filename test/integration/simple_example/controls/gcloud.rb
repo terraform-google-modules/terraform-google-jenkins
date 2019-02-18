@@ -30,7 +30,6 @@ control "gcloud" do
     its(:allowed_http?) { should be true }
     its(:direction) { should eq "INGRESS" }
     its(:source_ranges) { should eq ["0.0.0.0/0"] }
-    it { should allow_target_tags_only ["jenkins"] }
   end
 
   describe google_compute_firewall(project: project_id, name: "jenkins-#{jenkins_instance_name}-external-tcp-443") do
@@ -38,7 +37,6 @@ control "gcloud" do
     its(:allowed_https?) { should be true }
     its(:direction) { should eq "INGRESS" }
     its(:source_ranges) { should eq ["0.0.0.0/0"] }
-    it { should allow_target_tags_only ["jenkins"] }
   end
 
   describe google_service_account(name: "projects/#{project_id}/serviceAccounts/jenkins@#{project_id}.iam.gserviceaccount.com") do

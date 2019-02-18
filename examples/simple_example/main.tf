@@ -94,7 +94,6 @@ module "jenkins-gce" {
   jenkins_instance_zone                          = "us-east4-b"
   jenkins_instance_network                       = "${var.network}"
   jenkins_instance_subnetwork                    = "${var.subnetwork}"
-  jenkins_instance_network_tag                   = "jenkins"
   jenkins_instance_additional_metadata           = "${var.jenkins_instance_metadata}"
   jenkins_workers_project_id                     = "${google_project_service.iam.project}"
   jenkins_workers_zone                           = "us-east4-a"

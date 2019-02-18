@@ -24,9 +24,8 @@ resource "google_compute_firewall" "jenkins-external-80" {
     ports    = ["80"]
   }
 
-  source_ranges = "${var.jenkins_instance_access_cidrs}"
-
-  target_tags = ["${local.jenkins_tags}"]
+  source_ranges           = "${var.jenkins_instance_access_cidrs}"
+  target_service_accounts = ["${google_service_account.jenkins.email}"]
 }
 
 resource "google_compute_firewall" "jenkins-external-443" {
@@ -39,7 +38,6 @@ resource "google_compute_firewall" "jenkins-external-443" {
     ports    = ["443"]
   }
 
-  source_ranges = "${var.jenkins_instance_access_cidrs}"
-
-  target_tags = ["${local.jenkins_tags}"]
+  source_ranges           = "${var.jenkins_instance_access_cidrs}"
+  target_service_accounts = ["${google_service_account.jenkins.email}"]
 }
