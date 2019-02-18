@@ -108,7 +108,6 @@ variable "jenkins_workers_name_prefix" {
 
 variable "jenkins_workers_region" {
   description = "The name of the region into which to deploy Jenkins workers"
-  default     = "us-east4"
 }
 
 variable "jenkins_workers_zone" {

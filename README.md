@@ -44,7 +44,7 @@ Please see the [examples](./examples/) folder.
 | jenkins_workers_num_executors | The number of concurrent jobs that can run on each Jenkins worker | string | `1` | no |
 | jenkins_workers_preemptible | Whether to launch Jenkins workers as preemptible instances | string | `false` | no |
 | jenkins_workers_project_id | The GCP project to deploy Jenkins workers within | string | - | yes |
-| jenkins_workers_region | The name of the region into which to deploy Jenkins workers | string | `us-east4` | no |
+| jenkins_workers_region | The name of the region into which to deploy Jenkins workers | string | - | yes |
 | jenkins_workers_retention_time_minutes | The number of minutes for Jenkins workers to remain online after completing their last job | string | `6` | no |
 | jenkins_workers_run_as_user | The user to run Jenkins jobs as on workers | string | `ubuntu` | no |
 | jenkins_workers_service_account_email | The service account email to assign to Jenkins workers. Leave blank for the default compute service account | string | `` | no |
