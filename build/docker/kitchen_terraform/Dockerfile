@@ -17,7 +17,7 @@ ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
 RUN apk add --no-cache \
-        openssh-client=7.7_p1-r3
+        openssh-client
 
 RUN cd /tmp && \
     wget https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_linux_amd64.zip && \
