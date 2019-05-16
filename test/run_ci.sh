@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,9 +27,10 @@ if [ -z "${SERVICE_ACCOUNT_JSON}" ]; then
 	exit 1
 fi
 
+
 export TF_VAR_project_id="${PROJECT_ID}"
 export TF_VAR_region="${REGION:-us-east4}"
-export TF_VAR_zone="${ZONE:-us-east4-b}"
+
 
 
 DELETE_AT_EXIT="$(mktemp -d)"
@@ -44,6 +45,7 @@ set -x
 GOOGLE_APPLICATION_CREDENTIALS="${CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE}"
 declare -rx CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE GOOGLE_APPLICATION_CREDENTIALS
 set +e
+export TF_VAR_credentials_path="${CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE}"
 make test_integration
 result=$?
 set -e

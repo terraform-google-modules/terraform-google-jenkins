@@ -9,9 +9,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added symlinks for integration tests
-- Removed openssh version from Dockerfile
-- Added run_ci.sh file to test/ directory
+- Added symlinks for integration tests [#5]
+- Removed openssh version from Dockerfile [#5]
+- Added run_ci.sh file to test/ directory [#5]
 
 ### Changed
 
