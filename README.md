@@ -129,7 +129,6 @@ The test-kitchen instances in `test/fixtures/` wrap identically-named examples i
 
 ```
 CREDENTIALS_FILE="credentials.json" make docker_build_terraform
-
 ```
 4. Run the testing container in interactive mode:
 
