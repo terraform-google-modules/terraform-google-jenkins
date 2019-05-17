@@ -77,7 +77,6 @@ In order to execute this module you must have a Service Account with the followi
 - roles/compute.admin
 - roles/iam.serviceAccountUser
 - roles/compute.networkAdmin
-- roles/storage.admin
 
 ### Enable API's
 In order to operate with the Service Account you must activate the following APIs on the project where the Service Account was created:
