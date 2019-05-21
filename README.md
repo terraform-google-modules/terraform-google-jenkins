@@ -70,12 +70,14 @@ Please see the [examples](./examples/) folder.
 ### Terraform plugins
 - [Terraform](https://www.terraform.io/downloads.html) 0.10.x
 - [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v1.8.0
+- ruby-2.5.x
 
 ### Configure a Service Account
 In order to execute this module you must have a Service Account with the following project roles:
 
-- roles/compute.viewer
+- roles/compute.admin
 - roles/iam.serviceAccountUser
+- roles/compute.networkAdmin
 
 ### Enable API's
 In order to operate with the Service Account you must activate the following APIs on the project where the Service Account was created:
@@ -106,6 +108,7 @@ The project has the following folders and files:
 ### Requirements
 - [bundler](https://github.com/bundler/bundler)
 - [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.3.0
+- ruby-2.5.x
 
 ### Autogeneration of documentation from .tf files
 
@@ -125,11 +128,12 @@ The test-kitchen instances in `test/fixtures/` wrap identically-named examples i
 
 1. Configure the [test fixtures](#test-configuration)
 2. Download a Service Account key with the necessary permissions and put it in the module's root directory with the name `credentials.json`.
-3. Build the Docker containers for testing:
+3. Add appropriate variables to your environment
 
 ```
-CREDENTIALS_FILE="credentials.json" make docker_build_terraform
-CREDENTIALS_FILE="credentials.json" make docker_build_terraform
+export PROJECT_ID="YOUR_PROJECT_ID"
+CREDENTIALS_FILE="credentials.json"
+export SERVICE_ACCOUNT_JSON=`cat ${CREDENTIALS_FILE}`
 ```
 4. Run the testing container in interactive mode:
 
@@ -137,7 +141,7 @@ CREDENTIALS_FILE="credentials.json" make docker_build_terraform
 make docker_run
 ```
 
-The module root directory will be loaded into the Docker container at `/cftk/workdir/`.
+The module root directory will be loaded into the Docker container at `/cft/workdir/`.
 5. Run kitchen-terraform to test the infrastructure:
   1. `kitchen create` creates Terraform state and downloads modules, if applicable.
   2. `kitchen converge` creates the underlying resources. Run `kitchen converge <INSTANCE_NAME>` to create resources for a specific test case.
