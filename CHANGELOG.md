@@ -21,3 +21,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Initial release of module
+
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v0.1.0...HEAD
+[v0.1.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/releases/tag/v0.1.0
+
+[#5]: https://github.com/terraform-google-modules/terraform-google-jenkins/pull/5
