@@ -2,69 +2,73 @@
 
 This module handles the creation of a GCE instance running [Jenkins](https://jenkins.io/), configured to [run builds on Google Cloud](https://cloud.google.com/solutions/using-jenkins-for-distributed-builds-on-compute-engine). Creates an instance that can be logged into with the username `user` and the password `bitnami`.
 
+## Compatibility
+
+ This module is meant for use with Terraform 0.12. If you haven't [upgraded](https://www.terraform.io/upgrade-guides/0-12.html)
+  and need a Terraform 0.11.x-compatible version of this module, the last released version intended for
+  Terraform 0.11.x is [v0.1.0](https://registry.terraform.io/modules/terraform-google-modules/jenkins/google/0.1.0).
+
 ## Usage
 
 Please see the [examples](./examples/) folder.
 
-[^]: (autogen_docs_start)
-
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| gcs_bucket | The name of an existing GCS bucket to associate with the created service account, allowing build artifacts to be uploaded. Leave blank to skip | string | `` | no |
-| jenkins_boot_disk_source_image | The name of the disk image to use as the boot disk for the Jenkins master | string | `bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64` | no |
-| jenkins_boot_disk_source_image_project | The project within which the disk image to use as the Jenkins master boot disk exists | string | `bitnami-launchpad` | no |
-| jenkins_initial_password | The initial password to protect Jenkins logins with. Defaults to a random 8-character alphanumeric string. This may not contain special characters. | string | `` | no |
-| jenkins_instance_access_cidrs | CIDRs to allow to access Jenkins over HTTP(s) | list | `<list>` | no |
-| jenkins_instance_additional_metadata | Additional instance metadata to assign to the Jenkins VM | map | `<map>` | no |
-| jenkins_instance_machine_type | The machine type to provision for Jenkins | string | `n1-standard-4` | no |
-| jenkins_instance_name | The name to assign to the Jenkins VM | string | `jenkins` | no |
-| jenkins_instance_network | The GCP network to deploy the Jenkins VM in | string | - | yes |
-| jenkins_instance_subnetwork | The GCP subnetwork to deploy the Jenkins VM in | string | - | yes |
-| jenkins_instance_tags | Tags to assign to the Jenkins VM | list | `<list>` | no |
-| jenkins_instance_zone | The zone to deploy the Jenkins VM in | string | - | yes |
-| jenkins_jobs | A list of Jenkins jobs to configure on the instance | string | `<list>` | no |
-| jenkins_service_account_display_name | The display name of the service account to create for Jenkins VM provisioning | string | `Jenkins` | no |
-| jenkins_service_account_name | The name of the service account to create for Jenkins VM provisioning | string | `jenkins` | no |
-| jenkins_workers_boot_disk_size_gb | The size of Jenkins worker boot disks, in gigabytes | string | `10` | no |
-| jenkins_workers_boot_disk_source_image | The fully qualified URL to the disk image to use as the boot disk for Jenkins workers | string | `ubuntu-1604-xenial-v20181023` | no |
-| jenkins_workers_boot_disk_source_image_project | The project within which the disk image to use as the Jenkins worker boot disk exists | string | `ubuntu-os-cloud` | no |
-| jenkins_workers_boot_disk_type | The boot disk type to associate with Jenkins workers. Valid options are 'local-ssd', 'pd-ssd', and 'pd-standard' | string | `pd-ssd` | no |
-| jenkins_workers_description | A description of the Jenkins worker cloud to show in Jenkins | string | `Jenkins worker` | no |
-| jenkins_workers_instance_cap | The maximum number of GCE instances to create as Jenkins workers | string | `1` | no |
-| jenkins_workers_labels | GCP labels to apply to Jankins workers | list | `<list>` | no |
-| jenkins_workers_launch_timeout_seconds | The number of seconds to wait for a Jenkins worker to come online before timing out | string | `300` | no |
-| jenkins_workers_machine_type | The machine type to deploy Jenkins workers onto | string | `n1-standard-1` | no |
-| jenkins_workers_min_cpu_platform | The [minimum CPU platform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform) to deploy Jenkins workers onto. Leave blank for no restriction. | string | `` | no |
-| jenkins_workers_name_prefix | A prefix for the Jenkins workers instance names | string | `jenkins` | no |
-| jenkins_workers_network | The URL of the network to deploy Jenkins workers into | string | - | yes |
-| jenkins_workers_network_tags | A list of network tags to apply to Jenkins workers | list | `<list>` | no |
-| jenkins_workers_num_executors | The number of concurrent jobs that can run on each Jenkins worker | string | `1` | no |
-| jenkins_workers_preemptible | Whether to launch Jenkins workers as preemptible instances | string | `false` | no |
-| jenkins_workers_project_id | The GCP project to deploy Jenkins workers within | string | - | yes |
-| jenkins_workers_region | The name of the region into which to deploy Jenkins workers | string | - | yes |
-| jenkins_workers_retention_time_minutes | The number of minutes for Jenkins workers to remain online after completing their last job | string | `6` | no |
-| jenkins_workers_run_as_user | The user to run Jenkins jobs as on workers | string | `ubuntu` | no |
-| jenkins_workers_service_account_email | The service account email to assign to Jenkins workers. Leave blank for the default compute service account | string | `` | no |
-| jenkins_workers_startup_script | Any additional configuration to run on boot of Jenkins workers | string | `` | no |
-| jenkins_workers_subnetwork | The name of the subnetwork to deploy Jenkins workers into | string | `default` | no |
-| jenkins_workers_zone | The name of the zone into which to deploy Jenkins workers | string | `us-east4-b` | no |
-| project_id | The project ID to deploy to | string | - | yes |
-| region | The region to deploy to | string | - | yes |
+| gcs\_bucket | The name of an existing GCS bucket to associate with the created service account, allowing build artifacts to be uploaded. Leave blank to skip | string | `""` | no |
+| jenkins\_boot\_disk\_source\_image | The name of the disk image to use as the boot disk for the Jenkins master | string | `"bitnami-jenkins-2-176-2-0-linux-debian-9-x86-64"` | no |
+| jenkins\_boot\_disk\_source\_image\_project | The project within which the disk image to use as the Jenkins master boot disk exists | string | `"bitnami-launchpad"` | no |
+| jenkins\_initial\_password | The initial password to protect Jenkins logins with. Defaults to a random 8-character alphanumeric string. This may not contain special characters. | string | `""` | no |
+| jenkins\_instance\_access\_cidrs | CIDRs to allow to access Jenkins over HTTP(s) | list(string) | `<list>` | no |
+| jenkins\_instance\_additional\_metadata | Additional instance metadata to assign to the Jenkins VM | map(string) | `<map>` | no |
+| jenkins\_instance\_machine\_type | The machine type to provision for Jenkins | string | `"n1-standard-4"` | no |
+| jenkins\_instance\_name | The name to assign to the Jenkins VM | string | `"jenkins"` | no |
+| jenkins\_instance\_network | The GCP network to deploy the Jenkins VM in | string | n/a | yes |
+| jenkins\_instance\_subnetwork | The GCP subnetwork to deploy the Jenkins VM in | string | n/a | yes |
+| jenkins\_instance\_tags | Tags to assign to the Jenkins VM | list(string) | `<list>` | no |
+| jenkins\_instance\_zone | The zone to deploy the Jenkins VM in | string | n/a | yes |
+| jenkins\_jobs | A list of Jenkins jobs to configure on the instance | list | `<list>` | no |
+| jenkins\_service\_account\_display\_name | The display name of the service account to create for Jenkins VM provisioning | string | `"Jenkins"` | no |
+| jenkins\_service\_account\_name | The name of the service account to create for Jenkins VM provisioning | string | `"jenkins"` | no |
+| jenkins\_workers\_boot\_disk\_size\_gb | The size of Jenkins worker boot disks, in gigabytes | string | `"10"` | no |
+| jenkins\_workers\_boot\_disk\_source\_image | The fully qualified URL to the disk image to use as the boot disk for Jenkins workers | string | `"ubuntu-1604-xenial-v20181023"` | no |
+| jenkins\_workers\_boot\_disk\_source\_image\_project | The project within which the disk image to use as the Jenkins worker boot disk exists | string | `"ubuntu-os-cloud"` | no |
+| jenkins\_workers\_boot\_disk\_type | The boot disk type to associate with Jenkins workers. Valid options are 'local-ssd', 'pd-ssd', and 'pd-standard' | string | `"pd-ssd"` | no |
+| jenkins\_workers\_description | A description of the Jenkins worker cloud to show in Jenkins | string | `"Jenkins worker"` | no |
+| jenkins\_workers\_instance\_cap | The maximum number of GCE instances to create as Jenkins workers | string | `"1"` | no |
+| jenkins\_workers\_labels | GCP labels to apply to Jankins workers | list(string) | `<list>` | no |
+| jenkins\_workers\_launch\_timeout\_seconds | The number of seconds to wait for a Jenkins worker to come online before timing out | string | `"300"` | no |
+| jenkins\_workers\_machine\_type | The machine type to deploy Jenkins workers onto | string | `"n1-standard-1"` | no |
+| jenkins\_workers\_min\_cpu\_platform | The [minimum CPU platform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform) to deploy Jenkins workers onto. Leave blank for no restriction. | string | `""` | no |
+| jenkins\_workers\_name\_prefix | A prefix for the Jenkins workers instance names | string | `"jenkins"` | no |
+| jenkins\_workers\_network | The URL of the network to deploy Jenkins workers into | string | n/a | yes |
+| jenkins\_workers\_network\_tags | A list of network tags to apply to Jenkins workers | list(string) | `<list>` | no |
+| jenkins\_workers\_num\_executors | The number of concurrent jobs that can run on each Jenkins worker | string | `"1"` | no |
+| jenkins\_workers\_preemptible | Whether to launch Jenkins workers as preemptible instances | string | `"false"` | no |
+| jenkins\_workers\_project\_id | The GCP project to deploy Jenkins workers within | string | n/a | yes |
+| jenkins\_workers\_region | The name of the region into which to deploy Jenkins workers | string | n/a | yes |
+| jenkins\_workers\_retention\_time\_minutes | The number of minutes for Jenkins workers to remain online after completing their last job | string | `"6"` | no |
+| jenkins\_workers\_run\_as\_user | The user to run Jenkins jobs as on workers | string | `"ubuntu"` | no |
+| jenkins\_workers\_service\_account\_email | The service account email to assign to Jenkins workers. Leave blank for the default compute service account | string | `""` | no |
+| jenkins\_workers\_startup\_script | Any additional configuration to run on boot of Jenkins workers | string | `""` | no |
+| jenkins\_workers\_subnetwork | The name of the subnetwork to deploy Jenkins workers into | string | `"default"` | no |
+| jenkins\_workers\_zone | The name of the zone into which to deploy Jenkins workers | string | `"us-east4-b"` | no |
+| project\_id | The project ID to deploy to | string | n/a | yes |
+| region | The region to deploy to | string | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| jenkins_instance_initial_password | The initial password assigned to the Jenkins instance's `user` username |
-| jenkins_instance_name | The name of the running Jenkins instance |
-| jenkins_instance_public_ip | The public IP of the Jenkins instance |
-| jenkins_instance_service_account_email | The email address of the created service account |
-| jenkins_instance_zone | The zone in which Jenkins is running |
+| jenkins\_instance\_initial\_password | The initial password assigned to the Jenkins instance's `user` username |
+| jenkins\_instance\_name | The name of the running Jenkins instance |
+| jenkins\_instance\_public\_ip | The public IP of the Jenkins instance |
+| jenkins\_instance\_service\_account\_email | The email address of the created service account |
+| jenkins\_instance\_zone | The zone in which Jenkins is running |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Requirements
 ### Terraform plugins

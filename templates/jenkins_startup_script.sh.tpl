@@ -44,7 +44,7 @@ generate_ssh_key() {
 install_ssh_key() {
   echo "Installing SSH key for Jenkins configuration"
 
-  jenkins_user_config_path=/opt/bitnami/apps/jenkins/jenkins_home/users/user/config.xml
+  jenkins_user_config_path=$(find /opt/bitnami/apps/jenkins/jenkins_home/users/ -type f -name config.xml)
   ssh_public_key_path=/root/.ssh/id_rsa.pub
 
   /bin/cat <<EOF >/tmp/add_ssh_key.py
@@ -101,7 +101,7 @@ download_jenkins_cli() {
 uninstall_ssh_key() {
   echo "Uninstalling SSH key for Jenkins configuration"
 
-  jenkins_user_config_path=/opt/bitnami/apps/jenkins/jenkins_home/users/user/config.xml
+  jenkins_user_config_path=$(find /opt/bitnami/apps/jenkins/jenkins_home/users/ -type f -name config.xml)
 
   /bin/cat <<EOF >/tmp/add_ssh_key.py
 import xml.etree.ElementTree as ET
