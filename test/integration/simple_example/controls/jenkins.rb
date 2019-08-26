@@ -21,7 +21,7 @@ control "jenkins" do
 
   describe "Jenkins" do
     describe "GCE configuration" do
-      let(:config_xml) { command("cat /opt/bitnami/apps/jenkins/jenkins_home/config.xml").stdout }
+      let(:config_xml) { command("sudo cat /opt/bitnami/apps/jenkins/jenkins_home/config.xml").stdout }
       let(:config) { Nokogiri::XML(config_xml.to_s) }
 
       it "is configured for the correct project" do
@@ -40,7 +40,7 @@ control "jenkins" do
 
   describe "example job" do
 
-    let(:config_xml) { command("cat /opt/bitnami/apps/jenkins/jenkins_home/jobs/testjob/config.xml").stdout }
+    let(:config_xml) { command("sudo cat /opt/bitnami/apps/jenkins/jenkins_home/jobs/testjob/config.xml").stdout }
     let(:config) { Nokogiri::XML(config_xml.to_s) }
 
     it "is configured" do

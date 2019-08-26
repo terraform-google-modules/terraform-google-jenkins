@@ -20,18 +20,18 @@ resource "tls_private_key" "gce-keypair" {
 }
 
 resource "local_file" "gce-keypair-pk" {
-  content  = "${tls_private_key.gce-keypair.private_key_pem}"
+  content  = tls_private_key.gce-keypair.private_key_pem
   filename = "${path.module}/ssh/key"
 }
 
 module "example" {
   source = "../../../examples/simple_example"
 
-  project_id       = "${var.project_id}"
-  credentials_path = "${local.credentials_path}"
-  region           = "${var.region}"
-  network          = "${google_compute_network.main.self_link}"
-  subnetwork       = "${google_compute_subnetwork.subnetwork.self_link}"
+  project_id       = var.project_id
+  credentials_path = var.credentials_path
+  region           = var.region
+  network          = google_compute_network.main.self_link
+  subnetwork       = google_compute_subnetwork.subnetwork.self_link
 
   jenkins_instance_metadata = {
     sshKeys = "user:${tls_private_key.gce-keypair.public_key_openssh}"

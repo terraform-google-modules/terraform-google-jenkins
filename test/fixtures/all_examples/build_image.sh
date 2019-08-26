@@ -35,6 +35,7 @@ _project_id=$(grep project_id "${BASEDIR}/../../../test/fixtures/shared/terrafor
 _example_path="${BASEDIR}/../../../examples/${EXAMPLE}"
 if [ -d "${_example_path}/packer" ]; then
   cd "${_example_path}" || exit 1
-  PACKER_PROJECT_ID=${_project_id} make pack
+  # shellcheck disable=SC2154
+  PACKER_PROJECT_ID=${TF_VAR_project_id} make pack
   cd - || exit 1
 fi

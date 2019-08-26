@@ -44,7 +44,7 @@ generate_ssh_key() {
 install_ssh_key() {
   echo "Installing SSH key for Jenkins configuration"
 
-  jenkins_user_config_path=/opt/bitnami/apps/jenkins/jenkins_home/users/user/config.xml
+  jenkins_user_config_path=$(find /opt/bitnami/apps/jenkins/jenkins_home/users/ -type f -name config.xml)
   ssh_public_key_path=/root/.ssh/id_rsa.pub
 
   /bin/cat <<EOF >/tmp/add_ssh_key.py
@@ -101,7 +101,7 @@ download_jenkins_cli() {
 uninstall_ssh_key() {
   echo "Uninstalling SSH key for Jenkins configuration"
 
-  jenkins_user_config_path=/opt/bitnami/apps/jenkins/jenkins_home/users/user/config.xml
+  jenkins_user_config_path=$(find /opt/bitnami/apps/jenkins/jenkins_home/users/ -type f -name config.xml)
 
   /bin/cat <<EOF >/tmp/add_ssh_key.py
 import xml.etree.ElementTree as ET
@@ -216,8 +216,8 @@ cloudXML = '''
         <network>{network}</network>
         <subnetwork>{subnetwork}</subnetwork>
       </networkConfiguration>
-      <externalAddress>true</externalAddress>
-      <useInternalAddress>false</useInternalAddress>
+      <externalAddress>{external_address}</externalAddress>
+      <useInternalAddress>{use_internal_address}</useInternalAddress>
       <networkTags>{network_tags}</networkTags>
       <serviceAccountEmail>{service_account_email}</serviceAccountEmail>
       <mode>NORMAL</mode>
@@ -250,8 +250,8 @@ cloudXML = '''
     boot_disk_source_image_project="${jenkins_workers_boot_disk_source_image_project}",
     network="${jenkins_workers_network}",
     subnetwork="${jenkins_workers_subnetwork}",
-    external_address=True,
-    use_internal_address=False,
+    external_address="${jenkins_workers_external_address}",
+    use_internal_address="${jenkins_workers_use_internal_address}",
     network_tags="${jenkins_workers_network_tags}",
     service_account_email="${jenkins_workers_service_account_email}",
     retention_time_minutes=${jenkins_workers_retention_time_minutes},

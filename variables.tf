@@ -34,7 +34,7 @@ variable "jenkins_instance_machine_type" {
 
 variable "jenkins_boot_disk_source_image" {
   description = "The name of the disk image to use as the boot disk for the Jenkins master"
-  default     = "bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64"
+  default     = "bitnami-jenkins-2-176-2-0-linux-debian-9-x86-64"
 }
 
 variable "jenkins_boot_disk_source_image_project" {
@@ -55,13 +55,13 @@ variable "jenkins_instance_subnetwork" {
 }
 
 variable "jenkins_instance_tags" {
-  type        = "list"
+  type        = "list(string)"
   description = "Tags to assign to the Jenkins VM"
   default     = []
 }
 
 variable "jenkins_instance_additional_metadata" {
-  type        = "map"
+  type        = "map(string)"
   description = "Additional instance metadata to assign to the Jenkins VM"
   default     = {}
 }
@@ -72,9 +72,21 @@ variable "jenkins_initial_password" {
 }
 
 variable "jenkins_instance_access_cidrs" {
-  type        = "list"
+  type        = "list(string)"
   description = "CIDRs to allow to access Jenkins over HTTP(s)"
   default     = ["0.0.0.0/0"]
+}
+
+variable "jenkins_instance_private" {
+  type        = "string"
+  description = "Enable private Jenkins instance"
+  default     = false
+}
+
+variable "jenkins_instance_access_configs" {
+  description = "Jenkins server access configs"
+  type        = "list"
+  default     = [{}]
 }
 
 variable "jenkins_service_account_name" {
@@ -136,7 +148,7 @@ variable "jenkins_workers_min_cpu_platform" {
 }
 
 variable "jenkins_workers_labels" {
-  type        = "list"
+  type        = "list(string)"
   description = "GCP labels to apply to Jankins workers"
   default     = []
 }
@@ -171,7 +183,7 @@ variable "jenkins_workers_subnetwork" {
 }
 
 variable "jenkins_workers_network_tags" {
-  type        = "list"
+  type        = "list(string)"
   description = "A list of network tags to apply to Jenkins workers"
   default     = ["jenkins-agent"]
 }
@@ -199,6 +211,12 @@ variable "jenkins_workers_boot_disk_size_gb" {
 variable "jenkins_workers_num_executors" {
   description = "The number of concurrent jobs that can run on each Jenkins worker"
   default     = 1
+}
+
+variable "jenkins_workers_private" {
+  type        = "string"
+  description = "Enable private Jenkins workers"
+  default     = false
 }
 
 variable "gcs_bucket" {

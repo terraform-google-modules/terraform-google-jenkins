@@ -16,28 +16,28 @@
 
 resource "google_compute_firewall" "jenkins-external-80" {
   name    = "jenkins-${var.jenkins_instance_name}-external-tcp-80"
-  project = "${var.project_id}"
-  network = "${var.jenkins_instance_network}"
+  project = var.project_id
+  network = var.jenkins_instance_network
 
   allow {
     protocol = "tcp"
     ports    = ["80"]
   }
 
-  source_ranges           = "${var.jenkins_instance_access_cidrs}"
-  target_service_accounts = ["${google_service_account.jenkins.email}"]
+  source_ranges           = var.jenkins_instance_access_cidrs
+  target_service_accounts = [google_service_account.jenkins.email]
 }
 
 resource "google_compute_firewall" "jenkins-external-443" {
   name    = "jenkins-${var.jenkins_instance_name}-external-tcp-443"
-  project = "${var.project_id}"
-  network = "${var.jenkins_instance_network}"
+  project = var.project_id
+  network = var.jenkins_instance_network
 
   allow {
     protocol = "tcp"
     ports    = ["443"]
   }
 
-  source_ranges           = "${var.jenkins_instance_access_cidrs}"
-  target_service_accounts = ["${google_service_account.jenkins.email}"]
+  source_ranges           = var.jenkins_instance_access_cidrs
+  target_service_accounts = [google_service_account.jenkins.email]
 }

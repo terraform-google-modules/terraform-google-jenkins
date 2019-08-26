@@ -7,8 +7,15 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Wrong path to user's config in the startup script [#12]
+- bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64 image is not found [#12]
+
 ### Added
 
+- Standardize integration testing [#12]
+- Added support for Terraform 0.12 [#12]
 - Added symlink for integration tests [#5]
 - Removed openssh version from Dockerfile [#5]
 - Added test/ci_integration.sh file to test/ directory [#5]
@@ -26,3 +33,4 @@ project adheres to [Semantic Versioning](http://semver.org/).
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/releases/tag/v0.1.0
 
 [#5]: https://github.com/terraform-google-modules/terraform-google-jenkins/pull/5
+[#12]: https://github.com/terraform-google-modules/terraform-google-jenkins/pull/12
