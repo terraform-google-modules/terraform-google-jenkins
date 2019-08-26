@@ -14,7 +14,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Privet IP support (added `jenkins_instance_private`, `jenkins_workers_private` flags) [#14]
+- Private IP support (added `jenkins_instance_private`, `jenkins_workers_private` flags) [#14]
 - Standardize integration testing [#12]
 - Added support for Terraform 0.12 [#12]
 - Added symlink for integration tests [#5]
