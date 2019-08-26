@@ -36,7 +36,6 @@ ${data.template_file.jenkins_workers_agent_startup_script.rendered}
 ${var.jenkins_workers_startup_script}
 EOF
   jenkins_instance_access_configs = var.jenkins_instance_private ? [] : var.jenkins_instance_access_configs
-  jenkins_workers_access_configs  = var.jenkins_workers_private ? [] : var.jenkins_workers_access_configs
 }
 
 resource "random_string" "jenkins_password" {
