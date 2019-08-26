@@ -15,6 +15,6 @@
 ruby '~> 2.5'
 
 source 'https://rubygems.org/' do
-  gem 'kitchen-terraform', '~> 4.0'
+  gem 'kitchen-terraform', '~> 4.9'
   gem 'nokogiri', '~> 1.8'
 end

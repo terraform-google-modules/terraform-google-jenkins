@@ -33,7 +33,7 @@ variable "network" {
 
 variable "jenkins_instance_metadata" {
   description = "Additional metadata to pass to the Jenkins master instance"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
@@ -41,3 +41,4 @@ variable "subnetwork" {
   description = "The GCP subnetwork to launch the instance in"
   default     = "default"
 }
+

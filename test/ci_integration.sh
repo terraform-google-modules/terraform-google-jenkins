@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2019 Google LLC
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ setup_environment() {
   local tmpfile
   tmpfile="$(mktemp)"
   echo "${SERVICE_ACCOUNT_JSON}" > "${tmpfile}"
+
   # gcloud variables
   export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE="${tmpfile}"
   # Application default credentials (Terraform google provider and inspec-gcp)
@@ -38,7 +39,7 @@ setup_environment() {
 
   # Terraform variables
   export TF_VAR_project_id="$PROJECT_ID"
-  export TF_VAR_credentials_path="${CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE}"
+  export TF_VAR_credentials_path="${tmpfile}"
   export TF_VAR_region="${REGION:-us-east4}"
 }
 
@@ -55,6 +56,7 @@ main() {
   set -x
 
   # Execute the test lifecycle
+  bundle install
   kitchen create "$SUITE"
   kitchen converge "$SUITE"
   kitchen verify "$SUITE"

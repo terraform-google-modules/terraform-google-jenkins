@@ -15,50 +15,51 @@
  */
 
 resource "google_service_account" "jenkins" {
-  project      = "${var.project_id}"
-  account_id   = "${var.jenkins_service_account_name}"
-  display_name = "${var.jenkins_service_account_display_name}"
+  project      = var.project_id
+  account_id   = var.jenkins_service_account_name
+  display_name = var.jenkins_service_account_display_name
 }
 
 resource "google_project_iam_member" "jenkins-instance_admin_v1" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/compute.instanceAdmin.v1"
   member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
 resource "google_project_iam_member" "jenkins-instance_admin" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/compute.instanceAdmin"
   member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
 resource "google_project_iam_member" "jenkins-network_admin" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/compute.networkAdmin"
   member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
 resource "google_project_iam_member" "jenkins-security_admin" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/compute.securityAdmin"
   member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
 resource "google_project_iam_member" "jenkins-service_account_actor" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/iam.serviceAccountActor"
   member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
 resource "google_project_iam_member" "jenkins-service_account_user" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/iam.serviceAccountUser"
   member  = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
 resource "google_storage_bucket_iam_member" "jenkins-upload" {
-  count  = "${var.gcs_bucket != "" ? 1 : 0}"
-  bucket = "${var.gcs_bucket}"
+  count  = var.gcs_bucket != "" ? 1 : 0
+  bucket = var.gcs_bucket
   role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.jenkins.email}"
 }
+

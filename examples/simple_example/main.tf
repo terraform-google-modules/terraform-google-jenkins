@@ -15,30 +15,29 @@
  */
 
 provider "google" {
-  credentials = "${file(var.credentials_path)}"
-  region      = "${var.region}"
+  region      = var.region
 }
 
 resource "google_project_service" "cloudresourcemanager" {
-  project            = "${var.project_id}"
+  project            = var.project_id
   service            = "cloudresourcemanager.googleapis.com"
   disable_on_destroy = "false"
 }
 
 resource "google_project_service" "iam" {
-  project            = "${google_project_service.cloudresourcemanager.project}"
+  project            = google_project_service.cloudresourcemanager.project
   service            = "iam.googleapis.com"
   disable_on_destroy = "false"
 }
 
 data "google_compute_image" "jenkins_agent" {
-  project = "${google_project_service.cloudresourcemanager.project}"
+  project = google_project_service.cloudresourcemanager.project
   family  = "jenkins-agent"
 }
 
 resource "google_storage_bucket" "artifacts" {
   name          = "${var.project_id}-jenkins-artifacts"
-  project       = "${var.project_id}"
+  project       = var.project_id
   force_destroy = true
 }
 
@@ -47,18 +46,18 @@ data "local_file" "example_job_template" {
 }
 
 data "template_file" "example_job" {
-  template = "${data.local_file.example_job_template.content}"
+  template = data.local_file.example_job_template.content
 
-  vars {
-    project_id            = "${var.project_id}"
-    build_artifact_bucket = "${google_storage_bucket.artifacts.url}"
+  vars = {
+    project_id            = var.project_id
+    build_artifact_bucket = google_storage_bucket.artifacts.url
   }
 }
 
 resource "google_compute_firewall" "jenkins_agent_ssh_from_instance" {
   name    = "jenkins-agent-ssh-access"
-  network = "${var.network}"
-  project = "${var.project_id}"
+  network = var.network
+  project = var.project_id
 
   allow {
     protocol = "tcp"
@@ -71,8 +70,8 @@ resource "google_compute_firewall" "jenkins_agent_ssh_from_instance" {
 
 resource "google_compute_firewall" "jenkins_agent_discovery_from_agent" {
   name    = "jenkins-agent-udp-discovery"
-  network = "${var.network}"
-  project = "${var.project_id}"
+  network = var.network
+  project = var.project_id
 
   allow {
     protocol = "udp"
@@ -88,27 +87,28 @@ resource "google_compute_firewall" "jenkins_agent_discovery_from_agent" {
 
 module "jenkins-gce" {
   source                                         = "../../"
-  project_id                                     = "${google_project_service.iam.project}"
-  region                                         = "${var.region}"
-  gcs_bucket                                     = "${google_storage_bucket.artifacts.name}"
+  project_id                                     = google_project_service.iam.project
+  region                                         = var.region
+  gcs_bucket                                     = google_storage_bucket.artifacts.name
   jenkins_instance_zone                          = "us-east4-b"
-  jenkins_instance_network                       = "${var.network}"
-  jenkins_instance_subnetwork                    = "${var.subnetwork}"
-  jenkins_instance_additional_metadata           = "${var.jenkins_instance_metadata}"
-  jenkins_workers_region                         = "${var.region}"
-  jenkins_workers_project_id                     = "${google_project_service.iam.project}"
+  jenkins_instance_network                       = var.network
+  jenkins_instance_subnetwork                    = var.subnetwork
+  jenkins_instance_additional_metadata           = var.jenkins_instance_metadata
+  jenkins_workers_region                         = var.region
+  jenkins_workers_project_id                     = google_project_service.iam.project
   jenkins_workers_zone                           = "us-east4-a"
   jenkins_workers_machine_type                   = "n1-standard-1"
   jenkins_workers_boot_disk_type                 = "pd-ssd"
-  jenkins_workers_network                        = "${var.network}"
+  jenkins_workers_network                        = var.network
   jenkins_workers_network_tags                   = ["jenkins-agent"]
-  jenkins_workers_boot_disk_source_image         = "${data.google_compute_image.jenkins_agent.name}"
-  jenkins_workers_boot_disk_source_image_project = "${var.project_id}"
+  jenkins_workers_boot_disk_source_image         = data.google_compute_image.jenkins_agent.name
+  jenkins_workers_boot_disk_source_image_project = var.project_id
 
   jenkins_jobs = [
     {
       name     = "testjob"
-      manifest = "${data.template_file.example_job.rendered}"
+      manifest = data.template_file.example_job.rendered
     },
   ]
 }
+
