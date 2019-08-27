@@ -62,3 +62,4 @@ resource "google_storage_bucket_iam_member" "jenkins-upload" {
   role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.jenkins.email}"
 }
+

@@ -38,3 +38,4 @@ output "jenkins_instance_public_ip" {
   description = "The public IP of the Jenkins instance"
   value       = module.example.jenkins_instance_public_ip
 }
+

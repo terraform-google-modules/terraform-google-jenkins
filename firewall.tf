@@ -41,3 +41,4 @@ resource "google_compute_firewall" "jenkins-external-443" {
   source_ranges           = var.jenkins_instance_access_cidrs
   target_service_accounts = [google_service_account.jenkins.email]
 }
+

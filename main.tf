@@ -25,12 +25,9 @@ locals {
     var.jenkins_initial_password,
     random_string.jenkins_password.result,
   )
-  jenkins_startup_script_template = file(
-    "${path.module}/templates/jenkins_startup_script.sh.tpl"
-  )
-  jenkins_username            = "user"
+  jenkins_startup_script_template = file("${path.module}/templates/jenkins_startup_script.sh.tpl")
+  jenkins_username                = "user"
   jenkins_workers_project_url = "https://www.googleapis.com/compute/v1/projects/${var.jenkins_workers_project_id}"
-
   jenkins_workers_startup_script  = <<EOF
 ${data.template_file.jenkins_workers_agent_startup_script.rendered}
 ${var.jenkins_workers_startup_script}
@@ -77,7 +74,7 @@ data "template_file" "jenkins_startup_script" {
     jenkins_workers_region                         = "${local.jenkins_workers_project_url}/regions/${var.jenkins_workers_region}"
     jenkins_workers_zone                           = "${local.jenkins_workers_project_url}/zones/${var.jenkins_workers_zone}"
     jenkins_workers_machine_type                   = "${local.jenkins_workers_project_url}/zones/${var.jenkins_workers_zone}/machineTypes/${var.jenkins_workers_machine_type}"
-    jenkins_workers_startup_script                 = "${local.jenkins_workers_startup_script}"
+    jenkins_workers_startup_script                 = local.jenkins_workers_startup_script
     jenkins_workers_preemptible                    = var.jenkins_workers_preemptible ? "true" : "false"
     jenkins_workers_min_cpu_platform               = var.jenkins_workers_min_cpu_platform
     jenkins_workers_labels                         = join(",", var.jenkins_workers_labels)
@@ -145,3 +142,4 @@ resource "null_resource" "wait_for_jenkins_configuration" {
 
   depends_on = [google_compute_instance.jenkins]
 }
+

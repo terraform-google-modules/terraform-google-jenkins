@@ -29,3 +29,4 @@ output "jenkins_instance_initial_password" {
   description = "The initial password for the `user` user on the Jenkins master"
   value       = module.jenkins-gce.jenkins_instance_initial_password
 }
+

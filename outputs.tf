@@ -39,3 +39,4 @@ output "jenkins_instance_initial_password" {
   description = "The initial password assigned to the Jenkins instance's `user` username"
   value       = local.jenkins_password
 }
+

@@ -7,20 +7,20 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Private IP support - added `jenkins_instance_access_configs`, `jenkins_instance_private`, `jenkins_workers_private` vars [#14]
+
+## [v1.0.0] - 2019-08-27
+
+### Changed
+
+- The supported version of Terraform is 0.12 [#12]
+
 ### Fixed
 
 - Wrong path to user's config in the startup script [#12]
 - bitnami-jenkins-2-138-2-0-linux-debian-9-x86-64 image is not found [#12]
-
-### Added
-
-- Private IP support (added `jenkins_instance_private`, `jenkins_workers_private` flags) [#14]
-- Standardize integration testing [#12]
-- Added support for Terraform 0.12 [#12]
-- Added symlink for integration tests [#5]
-- Removed openssh version from Dockerfile [#5]
-- Added test/ci_integration.sh file to test/ directory [#5]
-- Makefile changed to standard one [#5]
 
 ### Changed
 
@@ -30,8 +30,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial release of module
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.0.0...HEAD
+[v1.0.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v0.1.0...v1.0.0
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/releases/tag/v0.1.0
 
-[#5]: https://github.com/terraform-google-modules/terraform-google-jenkins/pull/5
 [#12]: https://github.com/terraform-google-modules/terraform-google-jenkins/pull/12

@@ -30,12 +30,10 @@ if [ ! -d "${BASEDIR}/../../../examples/${EXAMPLE}" ]; then
   exit 1
 fi
 
-_project_id=$(grep project_id "${BASEDIR}/../../../test/fixtures/shared/terraform.tfvars" | cut -d= -f2 | cut -d\" -f2)
-
 _example_path="${BASEDIR}/../../../examples/${EXAMPLE}"
 if [ -d "${_example_path}/packer" ]; then
   cd "${_example_path}" || exit 1
   # shellcheck disable=SC2154
-  PACKER_PROJECT_ID=${TF_VAR_project_id} make pack
+  PACKER_PROJECT_ID="${TF_VAR_project_id}" make pack
   cd - || exit 1
 fi

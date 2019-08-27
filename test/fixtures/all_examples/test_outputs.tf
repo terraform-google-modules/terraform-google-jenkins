@@ -21,3 +21,4 @@ output "jenkins_instance_zone" {
   description = "The GCP zone the Jenkins instance was launched into"
   value       = module.jenkins-gce.jenkins_instance_zone
 }
+

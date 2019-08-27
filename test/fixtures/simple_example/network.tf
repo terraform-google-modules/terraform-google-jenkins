@@ -15,7 +15,6 @@
  */
 
 locals {
-  credentials_path = "${path.module}/${var.credentials_path}"
   example_name     = "simple-example"
 }
 
@@ -51,3 +50,4 @@ resource "google_compute_firewall" "ssh" {
     ports    = ["22"]
   }
 }
+

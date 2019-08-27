@@ -228,3 +228,4 @@ variable "jenkins_jobs" {
   description = "A list of Jenkins jobs to configure on the instance"
   default     = []
 }
+

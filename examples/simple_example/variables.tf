@@ -41,3 +41,4 @@ variable "subnetwork" {
   description = "The GCP subnetwork to launch the instance in"
   default     = "default"
 }
+
