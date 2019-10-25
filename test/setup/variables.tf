@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-variable "project_id" {
-  description = "The project ID to deploy to"
+variable "org_id" {
+  description = "The numeric organization id"
 }
 
-variable "region" {
-  description = "The region to deploy to"
+variable "folder_id" {
+  description = "The folder to deploy in"
 }
 
-variable "network" {
-  description = "The GCP network to launch the instance in"
-  default     = "default"
+variable "billing_account" {
+  description = "The billing account id associated with the project, e.g. XXXXXX-YYYYYY-ZZZZZZ"
 }
-
-variable "jenkins_instance_metadata" {
-  description = "Additional metadata to pass to the Jenkins master instance"
-  type        = map(string)
-  default     = {}
-}
-
-variable "subnetwork" {
-  description = "The GCP subnetwork to launch the instance in"
-  default     = "default"
-}
-

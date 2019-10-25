@@ -15,7 +15,7 @@
  */
 
 locals {
-  example_name     = "simple-example"
+  example_name = "simple-example"
 }
 
 resource "random_string" "suffix" {
@@ -25,7 +25,7 @@ resource "random_string" "suffix" {
 }
 
 provider "google" {
-  project     = var.project_id
+  project = var.project_id
 }
 
 resource "google_compute_network" "main" {

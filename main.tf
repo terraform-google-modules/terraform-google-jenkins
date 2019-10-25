@@ -38,8 +38,11 @@ EOF
 }
 
 resource "random_string" "jenkins_password" {
-  length  = 8
-  special = "false"
+  length      = 8
+  special     = "false"
+  min_numeric = 1
+  min_lower   = 1
+  min_upper   = 1
 }
 
 data "google_compute_image" "jenkins" {

@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  region      = var.region
+  region = var.region
 }
 
 resource "google_project_service" "cloudresourcemanager" {

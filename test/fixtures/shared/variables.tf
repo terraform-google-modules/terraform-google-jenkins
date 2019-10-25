@@ -18,10 +18,6 @@ variable "project_id" {
   description = "The GCP project ID to run tests in"
 }
 
-variable "credentials_path" {
-  description = "The relative path (from this directory) of the GCP credentials file to use for test runs"
-}
-
 variable "region" {
   description = "The GCP region to run tests in"
   default     = "us-east4"

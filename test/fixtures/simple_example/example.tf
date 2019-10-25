@@ -27,11 +27,10 @@ resource "local_file" "gce-keypair-pk" {
 module "example" {
   source = "../../../examples/simple_example"
 
-  project_id       = var.project_id
-  credentials_path = var.credentials_path
-  region           = var.region
-  network          = google_compute_network.main.self_link
-  subnetwork       = google_compute_subnetwork.subnetwork.self_link
+  project_id = var.project_id
+  region     = var.region
+  network    = google_compute_network.main.self_link
+  subnetwork = google_compute_subnetwork.subnetwork.self_link
 
   jenkins_instance_metadata = {
     sshKeys = "user:${tls_private_key.gce-keypair.public_key_openssh}"
