@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,14 @@
  * limitations under the License.
  */
 
-variable "project_id" {
-  description = "The project ID to deploy to"
+terraform {
+  required_version = ">= 0.12"
 }
 
-variable "region" {
-  description = "The region to deploy to"
+provider "google" {
+  version = "~> 2.13.0"
 }
 
-variable "network" {
-  description = "The GCP network to launch the instance in"
-  default     = "default"
+provider "google-beta" {
+  version = "~> 2.13.0"
 }
-
-variable "jenkins_instance_metadata" {
-  description = "Additional metadata to pass to the Jenkins master instance"
-  type        = map(string)
-  default     = {}
-}
-
-variable "subnetwork" {
-  description = "The GCP subnetwork to launch the instance in"
-  default     = "default"
-}
-

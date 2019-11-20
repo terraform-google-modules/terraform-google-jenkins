@@ -13,7 +13,6 @@ This example includes a [packer](https://www.packer.io) manifest for building a 
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials_path | The path to a Google Cloud Service Account credentials file | string | - | yes |
 | jenkins_instance_metadata | Additional metadata to pass to the Jenkins master instance | map | `<map>` | no |
 | network | The GCP network to launch the instance in | string | `default` | no |
 | project_id | The project ID to deploy to | string | - | yes |
