@@ -15,6 +15,10 @@
  */
 
 locals {
+
+  // project could be the same as var.project_id or different in case jenkins instance creating in shared VPC (means network belongs to differnet project)
+  jenkins_network_project_id = regex("/projects/([^/]*)/", var.jenkins_instance_network)[0]
+
   jenkins_metadata = {
     bitnami-base-password  = local.jenkins_password
     status-uptime-deadline = 420
@@ -115,7 +119,7 @@ resource "google_compute_instance" "jenkins" {
 
   network_interface {
     subnetwork         = var.jenkins_instance_subnetwork
-    subnetwork_project = var.project_id
+    subnetwork_project = local.jenkins_network_project_id
 
     access_config {
     }
