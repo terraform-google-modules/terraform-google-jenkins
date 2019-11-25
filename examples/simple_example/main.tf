@@ -18,15 +18,8 @@ provider "google" {
   region = var.region
 }
 
-data "google_compute_zones" "available" {
-  provider = google
-
-  project = var.project_id
-  region  = var.region
-}
-
 locals {
-  worker_network_project_id = regex("/projects/([^/]*)/", var.network)[0]
+  worker_network_project_id = coalesce(var.jenkins_network_project_id, var.project_id)
 }
 
 resource "google_project_service" "cloudresourcemanager" {
@@ -101,13 +94,13 @@ module "jenkins-gce" {
   project_id                                     = google_project_service.iam.project
   region                                         = var.region
   gcs_bucket                                     = google_storage_bucket.artifacts.name
-  jenkins_instance_zone                          = data.google_compute_zones.available.names[0]
+  jenkins_instance_zone                          = var.jenkins_instance_zone
   jenkins_instance_network                       = var.network
   jenkins_instance_subnetwork                    = var.subnetwork
   jenkins_instance_additional_metadata           = var.jenkins_instance_metadata
   jenkins_workers_region                         = var.region
   jenkins_workers_project_id                     = google_project_service.iam.project
-  jenkins_workers_zone                           = data.google_compute_zones.available.names[1]
+  jenkins_workers_zone                           = var.jenkins_workers_zone
   jenkins_workers_machine_type                   = "n1-standard-1"
   jenkins_workers_boot_disk_type                 = "pd-ssd"
   jenkins_workers_network                        = var.network

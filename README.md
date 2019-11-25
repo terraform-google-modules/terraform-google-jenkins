@@ -25,11 +25,12 @@ Please see the [examples](./examples/) folder.
 | jenkins\_instance\_additional\_metadata | Additional instance metadata to assign to the Jenkins VM | map(string) | `<map>` | no |
 | jenkins\_instance\_machine\_type | The machine type to provision for Jenkins | string | `"n1-standard-4"` | no |
 | jenkins\_instance\_name | The name to assign to the Jenkins VM | string | `"jenkins"` | no |
-| jenkins\_instance\_network | The GCP network to deploy the Jenkins VM in | string | n/a | yes |
+| jenkins\_instance\_network | The GCP network to deploy the Jenkins VM in. The firewall rules will be created in the project which hosts this network. | string | n/a | yes |
 | jenkins\_instance\_subnetwork | The GCP subnetwork to deploy the Jenkins VM in | string | n/a | yes |
 | jenkins\_instance\_tags | Tags to assign to the Jenkins VM | list(string) | `<list>` | no |
 | jenkins\_instance\_zone | The zone to deploy the Jenkins VM in | string | n/a | yes |
 | jenkins\_jobs | A list of Jenkins jobs to configure on the instance | list | `<list>` | no |
+| jenkins\_network\_project\_id | The project ID of the Jenkins network | string | `""` | no |
 | jenkins\_service\_account\_display\_name | The display name of the service account to create for Jenkins VM provisioning | string | `"Jenkins"` | no |
 | jenkins\_service\_account\_name | The name of the service account to create for Jenkins VM provisioning | string | `"jenkins"` | no |
 | jenkins\_workers\_boot\_disk\_size\_gb | The size of Jenkins worker boot disks, in gigabytes | string | `"10"` | no |
@@ -82,6 +83,8 @@ In order to execute this module you must have a Service Account with the followi
 - roles/compute.admin
 - roles/iam.serviceAccountUser
 - roles/compute.networkAdmin
+
+`roles/compute.networkAdmin` is required on the host project if a shared VPC is used.
 
 ### Enable API's
 In order to operate with the Service Account you must activate the following APIs on the project where the Service Account was created:
