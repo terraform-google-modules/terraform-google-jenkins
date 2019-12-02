@@ -7,11 +7,21 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.1.0] - 2019-12-02
+
+### Added
+
+- The `jenkins_network_project_id` variable provides enhanced support for shared VPC deployments. [#3]
+
 ## [v1.0.0] - 2019-08-27
 
 ### Changed
 
 - The supported version of Terraform is 0.12 [#12]
+
+### Fixed
+
+- The `wait-for-jenkins.sh` script respects `GOOGLE_APPLICATION_CREDENTIALS`. [#16]
 
 ### Fixed
 
@@ -26,8 +36,11 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial release of module
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v0.1.0...v1.0.0
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/releases/tag/v0.1.0
 
+[#16]: https://github.com/terraform-google-modules/terraform-google-jenkins/issues/16
 [#12]: https://github.com/terraform-google-modules/terraform-google-jenkins/pull/12
+[#3]: https://github.com/terraform-google-modules/terraform-google-jenkins/issues/3
