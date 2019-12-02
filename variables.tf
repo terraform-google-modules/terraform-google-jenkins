@@ -47,7 +47,7 @@ variable "jenkins_instance_zone" {
 }
 
 variable "jenkins_instance_network" {
-  description = "The GCP network to deploy the Jenkins VM in"
+  description = "The GCP network to deploy the Jenkins VM in. The firewall rules will be created in the project which hosts this network."
 }
 
 variable "jenkins_instance_subnetwork" {
@@ -211,3 +211,7 @@ variable "jenkins_jobs" {
   default     = []
 }
 
+variable "jenkins_network_project_id" {
+  description = "The project ID of the Jenkins network"
+  default     = ""
+}

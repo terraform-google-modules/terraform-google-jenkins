@@ -16,7 +16,7 @@
 
 resource "google_compute_firewall" "jenkins-external-80" {
   name    = "jenkins-${var.jenkins_instance_name}-external-tcp-80"
-  project = var.project_id
+  project = local.jenkins_network_project_id
   network = var.jenkins_instance_network
 
   allow {
@@ -30,7 +30,7 @@ resource "google_compute_firewall" "jenkins-external-80" {
 
 resource "google_compute_firewall" "jenkins-external-443" {
   name    = "jenkins-${var.jenkins_instance_name}-external-tcp-443"
-  project = var.project_id
+  project = local.jenkins_network_project_id
   network = var.jenkins_instance_network
 
   allow {

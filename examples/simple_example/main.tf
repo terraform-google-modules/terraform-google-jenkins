@@ -18,6 +18,10 @@ provider "google" {
   region = var.region
 }
 
+locals {
+  worker_network_project_id = coalesce(var.jenkins_network_project_id, var.project_id)
+}
+
 resource "google_project_service" "cloudresourcemanager" {
   project            = var.project_id
   service            = "cloudresourcemanager.googleapis.com"
@@ -57,7 +61,7 @@ data "template_file" "example_job" {
 resource "google_compute_firewall" "jenkins_agent_ssh_from_instance" {
   name    = "jenkins-agent-ssh-access"
   network = var.network
-  project = var.project_id
+  project = local.worker_network_project_id
 
   allow {
     protocol = "tcp"
@@ -71,7 +75,7 @@ resource "google_compute_firewall" "jenkins_agent_ssh_from_instance" {
 resource "google_compute_firewall" "jenkins_agent_discovery_from_agent" {
   name    = "jenkins-agent-udp-discovery"
   network = var.network
-  project = var.project_id
+  project = local.worker_network_project_id
 
   allow {
     protocol = "udp"
@@ -90,13 +94,13 @@ module "jenkins-gce" {
   project_id                                     = google_project_service.iam.project
   region                                         = var.region
   gcs_bucket                                     = google_storage_bucket.artifacts.name
-  jenkins_instance_zone                          = "us-east4-b"
+  jenkins_instance_zone                          = var.jenkins_instance_zone
   jenkins_instance_network                       = var.network
   jenkins_instance_subnetwork                    = var.subnetwork
   jenkins_instance_additional_metadata           = var.jenkins_instance_metadata
   jenkins_workers_region                         = var.region
   jenkins_workers_project_id                     = google_project_service.iam.project
-  jenkins_workers_zone                           = "us-east4-a"
+  jenkins_workers_zone                           = var.jenkins_workers_zone
   jenkins_workers_machine_type                   = "n1-standard-1"
   jenkins_workers_boot_disk_type                 = "pd-ssd"
   jenkins_workers_network                        = var.network

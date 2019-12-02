@@ -6,29 +6,30 @@ This example illustrates how to use the jenkins-gce module.
 
 This example includes a [packer](https://www.packer.io) manifest for building a Jenkins agent image. The Terraform deployment expects this image to exist in your GCP account, and will fail if it does not. To build and upload the agent image, you can run `make pack`.
 
-[^]: (autogen_docs_start)
-
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| jenkins_instance_metadata | Additional metadata to pass to the Jenkins master instance | map | `<map>` | no |
-| network | The GCP network to launch the instance in | string | `default` | no |
-| project_id | The project ID to deploy to | string | - | yes |
-| region | The region to deploy to | string | - | yes |
-| subnetwork | The GCP subnetwork to launch the instance in | string | `default` | no |
+| jenkins\_instance\_metadata | Additional metadata to pass to the Jenkins master instance | map(string) | `<map>` | no |
+| jenkins\_instance\_zone | The zone to deploy the Jenkins VM in | string | `"us-east4-b"` | no |
+| jenkins\_network\_project\_id | The project ID of the Jenkins network | string | `""` | no |
+| jenkins\_workers\_zone | The name of the zone into which to deploy Jenkins workers | string | `"us-east4-c"` | no |
+| network | The GCP network to launch the instance in | string | `"default"` | no |
+| project\_id | The project ID to deploy to | string | n/a | yes |
+| region | The region to deploy to | string | `"us-east4"` | no |
+| subnetwork | The GCP subnetwork to launch the instance in | string | `"default"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| jenkins_instance_initial_password | The initial password for the `user` user on the Jenkins master |
-| jenkins_instance_name | The name of the Jenkins master in GCP |
-| jenkins_instance_public_ip | The public IP address of the Jenkins master |
-| jenkins_instance_zone | The GCP zone the Jenkins instance was launched into |
+| jenkins\_instance\_initial\_password | The initial password for the `user` user on the Jenkins master |
+| jenkins\_instance\_name | The name of the Jenkins master in GCP |
+| jenkins\_instance\_public\_ip | The public IP address of the Jenkins master |
+| jenkins\_instance\_zone | The name of the Jenkins zone in GCP |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 To provision this example, run the following from within this directory:
 - `terraform init` to get the plugins
