@@ -7,6 +7,13 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.2.0] - 2019-12-03
+
+### Added
+
+- The `artifacts_storage` submodule. [#2]
+- The `create_firewall_rules` variable which toggles Jenkins agent rules. [#2]
+
 ## [v1.1.0] - 2019-12-02
 
 ### Added
@@ -36,7 +43,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 * Initial release of module
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.2.0...HEAD
+[v1.2.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v0.1.0...v1.0.0
 [v0.1.0]: https://github.com/terraform-google-modules/terraform-google-jenkins/releases/tag/v0.1.0
@@ -44,3 +52,4 @@ project adheres to [Semantic Versioning](http://semver.org/).
 [#16]: https://github.com/terraform-google-modules/terraform-google-jenkins/issues/16
 [#12]: https://github.com/terraform-google-modules/terraform-google-jenkins/pull/12
 [#3]: https://github.com/terraform-google-modules/terraform-google-jenkins/issues/3
+[#2]: https://github.com/terraform-google-modules/terraform-google-jenkins/issues/2
