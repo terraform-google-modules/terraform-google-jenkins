@@ -22,6 +22,12 @@ variable "region" {
   description = "The region to deploy to"
 }
 
+variable "create_firewall_rules" {
+  description = "If worker firewall rules should be created"
+  default     = false
+  type        = bool
+}
+
 variable "jenkins_instance_name" {
   description = "The name to assign to the Jenkins VM"
   default     = "jenkins"

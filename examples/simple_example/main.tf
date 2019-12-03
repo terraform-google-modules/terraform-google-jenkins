@@ -18,10 +18,6 @@ provider "google" {
   region = var.region
 }
 
-locals {
-  worker_network_project_id = coalesce(var.jenkins_network_project_id, var.project_id)
-}
-
 resource "google_project_service" "cloudresourcemanager" {
   project            = var.project_id
   service            = "cloudresourcemanager.googleapis.com"
@@ -34,67 +30,39 @@ resource "google_project_service" "iam" {
   disable_on_destroy = "false"
 }
 
+module "artifacts" {
+  source = "../../modules/artifact_storage"
+
+  project_id = var.project_id
+  jobs_count = 1
+
+  jobs = [
+    {
+      name = "testjob"
+
+      builders = [
+        <<EOF
+<hudson.tasks.Shell>
+  <command>echo &quot;hello world from testjob&quot;
+  env &gt; build-log.txt</command>
+</hudson.tasks.Shell>
+EOF
+      ]
+    }
+  ]
+}
+
 data "google_compute_image" "jenkins_agent" {
   project = google_project_service.cloudresourcemanager.project
   family  = "jenkins-agent"
-}
-
-resource "google_storage_bucket" "artifacts" {
-  name          = "${var.project_id}-jenkins-artifacts"
-  project       = var.project_id
-  force_destroy = true
-}
-
-data "local_file" "example_job_template" {
-  filename = "${path.module}/templates/example_job.xml.tpl"
-}
-
-data "template_file" "example_job" {
-  template = data.local_file.example_job_template.content
-
-  vars = {
-    project_id            = var.project_id
-    build_artifact_bucket = google_storage_bucket.artifacts.url
-  }
-}
-
-resource "google_compute_firewall" "jenkins_agent_ssh_from_instance" {
-  name    = "jenkins-agent-ssh-access"
-  network = var.network
-  project = local.worker_network_project_id
-
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-
-  source_tags = ["jenkins"]
-  target_tags = ["jenkins-agent"]
-}
-
-resource "google_compute_firewall" "jenkins_agent_discovery_from_agent" {
-  name    = "jenkins-agent-udp-discovery"
-  network = var.network
-  project = local.worker_network_project_id
-
-  allow {
-    protocol = "udp"
-  }
-
-  allow {
-    protocol = "tcp"
-  }
-
-  source_tags = ["jenkins", "jenkins-agent"]
-  target_tags = ["jenkins", "jenkins-agent"]
 }
 
 module "jenkins-gce" {
   source                                         = "../../"
   project_id                                     = google_project_service.iam.project
   region                                         = var.region
-  gcs_bucket                                     = google_storage_bucket.artifacts.name
   jenkins_instance_zone                          = var.jenkins_instance_zone
+  gcs_bucket                                     = module.artifacts.artifact_bucket
   jenkins_instance_network                       = var.network
   jenkins_instance_subnetwork                    = var.subnetwork
   jenkins_instance_additional_metadata           = var.jenkins_instance_metadata
@@ -108,11 +76,8 @@ module "jenkins-gce" {
   jenkins_workers_boot_disk_source_image         = data.google_compute_image.jenkins_agent.name
   jenkins_workers_boot_disk_source_image_project = var.project_id
 
-  jenkins_jobs = [
-    {
-      name     = "testjob"
-      manifest = data.template_file.example_job.rendered
-    },
-  ]
+  create_firewall_rules = true
+
+  jenkins_jobs = module.artifacts.jobs
 }
 

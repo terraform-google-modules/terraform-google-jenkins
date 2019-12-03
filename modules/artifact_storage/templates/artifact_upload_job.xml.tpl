@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
 	<actions/>
-	<description></description>
+	<description>Job ${job_name}</description>
 	<keepDependencies>false</keepDependencies>
 	<properties/>
 	<scm class="hudson.scm.NullSCM"/>
@@ -13,10 +13,7 @@
 	<triggers/>
 	<concurrentBuild>true</concurrentBuild>
 	<builders>
-		<hudson.tasks.Shell>
-			<command>echo &quot;hello world from testjob&quot;
-			env &gt; build-log.txt</command>
-		</hudson.tasks.Shell>
+		${job_builders}
 	</builders>
 	<publishers>
 		<com.google.jenkins.plugins.storage.GoogleCloudStorageUploader plugin="google-storage-plugin@1.1">
