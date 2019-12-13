@@ -15,26 +15,20 @@
  */
 
 provider "google" {
-  region = var.region
+  region  = var.region
+  version = "~> 2.12.0"
 }
 
-resource "google_project_service" "cloudresourcemanager" {
-  project            = var.project_id
-  service            = "cloudresourcemanager.googleapis.com"
-  disable_on_destroy = "false"
-}
-
-resource "google_project_service" "iam" {
-  project            = google_project_service.cloudresourcemanager.project
-  service            = "iam.googleapis.com"
-  disable_on_destroy = "false"
+locals {
+  artifact_bucket = "${var.project_id}-jenkins-artifacts"
 }
 
 module "artifacts" {
   source = "../../modules/artifact_storage"
 
-  project_id = var.project_id
-  jobs_count = 1
+  project_id  = var.project_id
+  jobs_count  = 1
+  bucket_name = local.artifact_bucket
 
   jobs = [
     {
@@ -53,21 +47,21 @@ EOF
 }
 
 data "google_compute_image" "jenkins_agent" {
-  project = google_project_service.cloudresourcemanager.project
+  project = var.project_id
   family  = "jenkins-agent"
 }
 
 module "jenkins-gce" {
   source                                         = "../../"
-  project_id                                     = google_project_service.iam.project
+  project_id                                     = var.project_id
   region                                         = var.region
   jenkins_instance_zone                          = var.jenkins_instance_zone
-  gcs_bucket                                     = module.artifacts.artifact_bucket
+  gcs_bucket                                     = local.artifact_bucket
   jenkins_instance_network                       = var.network
   jenkins_instance_subnetwork                    = var.subnetwork
   jenkins_instance_additional_metadata           = var.jenkins_instance_metadata
   jenkins_workers_region                         = var.region
-  jenkins_workers_project_id                     = google_project_service.iam.project
+  jenkins_workers_project_id                     = var.project_id
   jenkins_workers_zone                           = var.jenkins_workers_zone
   jenkins_workers_machine_type                   = "n1-standard-1"
   jenkins_workers_boot_disk_type                 = "pd-ssd"
@@ -75,8 +69,9 @@ module "jenkins-gce" {
   jenkins_workers_network_tags                   = ["jenkins-agent"]
   jenkins_workers_boot_disk_source_image         = data.google_compute_image.jenkins_agent.name
   jenkins_workers_boot_disk_source_image_project = var.project_id
-
-  create_firewall_rules = true
+  jenkins_service_account_name                   = "jenkins"
+  jenkins_service_account_display_name           = "Jenkins"
+  create_firewall_rules                          = true
 
   jenkins_jobs = module.artifacts.jobs
 }

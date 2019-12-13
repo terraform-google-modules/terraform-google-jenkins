@@ -51,3 +51,25 @@ suites:
           user: user
     provisioner:
       name: terraform
+
+  - name: "shared_vpc_example"
+    driver:
+      name: "terraform"
+      command_timeout: 1800
+      root_module_directory: test/fixtures/shared_vpc_example
+    verifier:
+      name: terraform
+      color: false
+      systems:
+        - name: shared_vpc_example_local
+          backend: local
+          controls:
+            - jenkins
+            - shared_vpc
+        - name: shared_vpc_example_gcp
+          backend: gcp
+          shell: true
+          controls:
+            - gcloud
+    provisioner:
+      name: terraform

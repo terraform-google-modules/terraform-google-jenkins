@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
+
 resource "google_storage_bucket" "artifacts" {
-  name          = "${var.project_id}-jenkins-artifacts"
+  name          = var.bucket_name
   project       = var.project_id
   force_destroy = true
 }

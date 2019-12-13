@@ -42,12 +42,27 @@ resource "google_compute_firewall" "jenkins-external-443" {
   target_service_accounts = [google_service_account.jenkins.email]
 }
 
+
+resource "google_compute_firewall" "jenkins-external-ssh" {
+  name    = "jenkins-${var.jenkins_instance_name}-external-ssh"
+  project = local.jenkins_network_project_id
+  network = var.jenkins_instance_network
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges           = var.jenkins_instance_access_cidrs
+  target_service_accounts = [google_service_account.jenkins.email]
+}
+
 resource "google_compute_firewall" "jenkins_agent_ssh_from_instance" {
   count = var.create_firewall_rules ? 1 : 0
 
   name    = "jenkins-agent-ssh-access"
   network = var.jenkins_workers_network
-  project = var.project_id
+  project = local.jenkins_network_project_id
 
   allow {
     protocol = "tcp"

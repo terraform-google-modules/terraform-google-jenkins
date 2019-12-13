@@ -1,0 +1,29 @@
+name: shared_vpc_example
+depends:
+  - name: inspec-gcp
+    url: https://github.com/inspec/inspec-gcp/archive/v0.21.4.tar.gz
+attributes:
+  - name: project_id
+    required: true
+    type: string
+  - name: jenkins_instance_zone
+    required: true
+    type: string
+  - name: jenkins_instance_name
+    required: true
+    type: string
+  - name: jenkins_instance_public_ip
+    required: true
+    type: string
+  - name: jenkins_password
+    required: true
+    type: string
+  - name: svpc_host_project_id
+    required: true
+    type: string
+  - name: svpc_network_name
+    required: true
+    type: string
+  - name: svpc_subnetwork_name
+    required: true
+    type: string
