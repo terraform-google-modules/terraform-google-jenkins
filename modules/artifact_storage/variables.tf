@@ -34,3 +34,9 @@ variable "jobs_count" {
   type        = number
   default     = 0
 }
+
+variable "bucket_name" {
+  description = "The bucket name"
+  type        = string
+}
+

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 resource "google_service_account" "jenkins" {
   project      = var.project_id
   account_id   = var.jenkins_service_account_name
@@ -63,3 +64,16 @@ resource "google_storage_bucket_iam_member" "jenkins-upload" {
   member = "serviceAccount:${google_service_account.jenkins.email}"
 }
 
+// SharedVPC requirements
+locals {
+  svpc_subnets_count = var.jenkins_instance_subnetwork != var.jenkins_workers_subnetwork ? 2 : 1
+}
+
+resource "google_compute_subnetwork_iam_member" "jenkins_svpc_subnets" {
+  count      = var.jenkins_network_project_id != "" ? local.svpc_subnets_count : 0
+  subnetwork = element([var.jenkins_instance_subnetwork, var.jenkins_workers_subnetwork], count.index)
+  role       = "roles/compute.networkUser"
+  region     = var.region
+  project    = var.jenkins_network_project_id
+  member     = "serviceAccount:${google_service_account.jenkins.email}"
+}

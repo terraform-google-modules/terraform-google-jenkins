@@ -30,3 +30,15 @@ output "sa_email" {
 output "parent_id" {
   value = var.org_id
 }
+
+output "svpc_host_project_id" {
+  value = module.jenkins_svpc_host_project.project_id
+}
+
+output "svpc_network_name" {
+  value = module.jenkins_network.network_name
+}
+
+output "svpc_subnetwork_name" {
+  value = module.jenkins_network.subnets_names[0]
+}
