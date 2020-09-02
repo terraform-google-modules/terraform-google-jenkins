@@ -38,7 +38,7 @@ install_python_dependencies() {
 
 generate_ssh_key() {
   echo "Generating SSH key for Jenkins configuration"
-  cat /dev/zero | ssh-keygen -q -N ""
+  cat /dev/zero | ssh-keygen -q -N "" -f ~/.ssh/id_rsa <<<y 2>&1 >/dev/null
 }
 
 install_ssh_key() {
