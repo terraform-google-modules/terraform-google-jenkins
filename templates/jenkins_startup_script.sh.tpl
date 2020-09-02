@@ -27,6 +27,7 @@ install_system_dependencies() {
     sleep 0.5
   done
   echo "Apt finished; continuing..."
+  apt -y update
   apt-get install -y -qq python-pip
 }
 
