@@ -27,6 +27,7 @@ install_system_dependencies() {
     sleep 0.5
   done
   echo "Apt finished; continuing..."
+  apt -y update
   apt-get install -y -qq python-pip
 }
 
@@ -38,7 +39,7 @@ install_python_dependencies() {
 
 generate_ssh_key() {
   echo "Generating SSH key for Jenkins configuration"
-  cat /dev/zero | ssh-keygen -q -N ""
+  ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa <<<y 2>&1 >/dev/null
 }
 
 install_ssh_key() {
