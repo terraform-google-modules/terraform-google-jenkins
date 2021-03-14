@@ -10,15 +10,15 @@ This example includes a [packer](https://www.packer.io) manifest for building a 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| jenkins\_instance\_metadata | Additional metadata to pass to the Jenkins master instance | map(string) | `<map>` | no |
-| jenkins\_instance\_zone | The zone to deploy the Jenkins VM in | string | `"us-east4-b"` | no |
-| jenkins\_network\_project\_id | The project ID of the Jenkins network | string | `""` | no |
-| jenkins\_workers\_zone | The name of the zone into which to deploy Jenkins workers | string | `"us-east4-c"` | no |
-| network | The GCP network to launch the instance in | string | `"default"` | no |
-| project\_id | The project ID to deploy to | string | n/a | yes |
-| region | The region to deploy to | string | `"us-east4"` | no |
-| subnetwork | The GCP subnetwork to launch the instance in | string | `"default"` | no |
+|------|-------------|------|---------|:--------:|
+| jenkins\_instance\_metadata | Additional metadata to pass to the Jenkins master instance | `map(string)` | `{}` | no |
+| jenkins\_instance\_zone | The zone to deploy the Jenkins VM in | `string` | `"us-east4-b"` | no |
+| jenkins\_network\_project\_id | The project ID of the Jenkins network | `string` | `""` | no |
+| jenkins\_workers\_zone | The name of the zone into which to deploy Jenkins workers | `string` | `"us-east4-c"` | no |
+| network | The GCP network to launch the instance in | `string` | `"default"` | no |
+| project\_id | The project ID to deploy to | `any` | n/a | yes |
+| region | The region to deploy to | `string` | `"us-east4"` | no |
+| subnetwork | The GCP subnetwork to launch the instance in | `string` | `"default"` | no |
 
 ## Outputs
 
