@@ -11,11 +11,11 @@ Shared VPC host project, shared VPC service projects, shared network and sub-net
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| project\_id | The project ID to deploy jenkins to | string | n/a | yes |
-| svpc\_host\_project\_id | The Shared VPC host project ID. In example the project the Jenkins network is hosted in | string | n/a | yes |
-| svpc\_network\_name | The network in Shared VPC host account to deploy the Jenkins instance to | string | n/a | yes |
-| svpc\_subnetwork\_name | The subnetwork name to deploy Jenkins to | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| project\_id | The project ID to deploy jenkins to | `any` | n/a | yes |
+| svpc\_host\_project\_id | The Shared VPC host project ID. In example the project the Jenkins network is hosted in | `any` | n/a | yes |
+| svpc\_network\_name | The network in Shared VPC host account to deploy the Jenkins instance to | `any` | n/a | yes |
+| svpc\_subnetwork\_name | The subnetwork name to deploy Jenkins to | `any` | n/a | yes |
 
 ## Outputs
 
