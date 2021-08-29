@@ -16,49 +16,49 @@ Please see the [examples](./examples/) folder.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| create\_firewall\_rules | If worker firewall rules should be created | bool | `"false"` | no |
-| gcs\_bucket | The name of an existing GCS bucket to associate with the created service account, allowing build artifacts to be uploaded. Leave blank to skip | string | `""` | no |
-| jenkins\_boot\_disk\_source\_image | The name of the disk image to use as the boot disk for the Jenkins master | string | `"bitnami-jenkins-2-176-2-0-linux-debian-9-x86-64"` | no |
-| jenkins\_boot\_disk\_source\_image\_project | The project within which the disk image to use as the Jenkins master boot disk exists | string | `"bitnami-launchpad"` | no |
-| jenkins\_initial\_password | The initial password to protect Jenkins logins with. Defaults to a random 8-character alphanumeric string. This may not contain special characters. | string | `""` | no |
-| jenkins\_instance\_access\_cidrs | CIDRs to allow to access Jenkins over HTTP(s) | list(string) | `<list>` | no |
-| jenkins\_instance\_additional\_metadata | Additional instance metadata to assign to the Jenkins VM | map(string) | `<map>` | no |
-| jenkins\_instance\_machine\_type | The machine type to provision for Jenkins | string | `"n1-standard-4"` | no |
-| jenkins\_instance\_name | The name to assign to the Jenkins VM | string | `"jenkins"` | no |
-| jenkins\_instance\_network | The GCP network to deploy the Jenkins VM in. The firewall rules will be created in the project which hosts this network. | string | n/a | yes |
-| jenkins\_instance\_subnetwork | The GCP subnetwork to deploy the Jenkins VM in | string | n/a | yes |
-| jenkins\_instance\_tags | Tags to assign to the Jenkins VM | list(string) | `<list>` | no |
-| jenkins\_instance\_zone | The zone to deploy the Jenkins VM in | string | n/a | yes |
-| jenkins\_jobs | A list of Jenkins jobs to configure on the instance | list | `<list>` | no |
-| jenkins\_network\_project\_id | The project ID of the Jenkins network | string | `""` | no |
-| jenkins\_service\_account\_display\_name | The display name of the service account to create for Jenkins VM provisioning | string | `"Jenkins"` | no |
-| jenkins\_service\_account\_name | The name of the service account to create for Jenkins VM provisioning | string | `"jenkins"` | no |
-| jenkins\_workers\_boot\_disk\_size\_gb | The size of Jenkins worker boot disks, in gigabytes | string | `"10"` | no |
-| jenkins\_workers\_boot\_disk\_source\_image | The fully qualified URL to the disk image to use as the boot disk for Jenkins workers | string | `"ubuntu-1604-xenial-v20181023"` | no |
-| jenkins\_workers\_boot\_disk\_source\_image\_project | The project within which the disk image to use as the Jenkins worker boot disk exists | string | `"ubuntu-os-cloud"` | no |
-| jenkins\_workers\_boot\_disk\_type | The boot disk type to associate with Jenkins workers. Valid options are 'local-ssd', 'pd-ssd', and 'pd-standard' | string | `"pd-ssd"` | no |
-| jenkins\_workers\_description | A description of the Jenkins worker cloud to show in Jenkins | string | `"Jenkins worker"` | no |
-| jenkins\_workers\_instance\_cap | The maximum number of GCE instances to create as Jenkins workers | string | `"1"` | no |
-| jenkins\_workers\_labels | GCP labels to apply to Jankins workers | list(string) | `<list>` | no |
-| jenkins\_workers\_launch\_timeout\_seconds | The number of seconds to wait for a Jenkins worker to come online before timing out | string | `"300"` | no |
-| jenkins\_workers\_machine\_type | The machine type to deploy Jenkins workers onto | string | `"n1-standard-1"` | no |
-| jenkins\_workers\_min\_cpu\_platform | The [minimum CPU platform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform) to deploy Jenkins workers onto. Leave blank for no restriction. | string | `""` | no |
-| jenkins\_workers\_name\_prefix | A prefix for the Jenkins workers instance names | string | `"jenkins"` | no |
-| jenkins\_workers\_network | The URL of the network to deploy Jenkins workers into | string | n/a | yes |
-| jenkins\_workers\_network\_tags | A list of network tags to apply to Jenkins workers | list(string) | `<list>` | no |
-| jenkins\_workers\_num\_executors | The number of concurrent jobs that can run on each Jenkins worker | string | `"1"` | no |
-| jenkins\_workers\_preemptible | Whether to launch Jenkins workers as preemptible instances | string | `"false"` | no |
-| jenkins\_workers\_project\_id | The GCP project to deploy Jenkins workers within | string | n/a | yes |
-| jenkins\_workers\_region | The name of the region into which to deploy Jenkins workers | string | n/a | yes |
-| jenkins\_workers\_retention\_time\_minutes | The number of minutes for Jenkins workers to remain online after completing their last job | string | `"6"` | no |
-| jenkins\_workers\_run\_as\_user | The user to run Jenkins jobs as on workers | string | `"ubuntu"` | no |
-| jenkins\_workers\_service\_account\_email | The service account email to assign to Jenkins workers. Leave blank for the default compute service account | string | `""` | no |
-| jenkins\_workers\_startup\_script | Any additional configuration to run on boot of Jenkins workers | string | `""` | no |
-| jenkins\_workers\_subnetwork | The name of the subnetwork to deploy Jenkins workers into | string | `"default"` | no |
-| jenkins\_workers\_zone | The name of the zone into which to deploy Jenkins workers | string | `"us-east4-b"` | no |
-| project\_id | The project ID to deploy to | string | n/a | yes |
-| region | The region to deploy to | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| create\_firewall\_rules | If worker firewall rules should be created | `bool` | `false` | no |
+| gcs\_bucket | The name of an existing GCS bucket to associate with the created service account, allowing build artifacts to be uploaded. Leave blank to skip | `string` | `""` | no |
+| jenkins\_boot\_disk\_source\_image | The name of the disk image to use as the boot disk for the Jenkins master | `string` | `"bitnami-jenkins-2-204-2-1-linux-debian-9-x86-64"` | no |
+| jenkins\_boot\_disk\_source\_image\_project | The project within which the disk image to use as the Jenkins master boot disk exists | `string` | `"bitnami-launchpad"` | no |
+| jenkins\_initial\_password | The initial password to protect Jenkins logins with. Defaults to a random 8-character alphanumeric string. This may not contain special characters. | `string` | `""` | no |
+| jenkins\_instance\_access\_cidrs | CIDRs to allow to access Jenkins over HTTP(s) | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| jenkins\_instance\_additional\_metadata | Additional instance metadata to assign to the Jenkins VM | `map(string)` | `{}` | no |
+| jenkins\_instance\_machine\_type | The machine type to provision for Jenkins | `string` | `"n1-standard-4"` | no |
+| jenkins\_instance\_name | The name to assign to the Jenkins VM | `string` | `"jenkins"` | no |
+| jenkins\_instance\_network | The GCP network to deploy the Jenkins VM in. The firewall rules will be created in the project which hosts this network. | `any` | n/a | yes |
+| jenkins\_instance\_subnetwork | The GCP subnetwork to deploy the Jenkins VM in | `any` | n/a | yes |
+| jenkins\_instance\_tags | Tags to assign to the Jenkins VM | `list(string)` | `[]` | no |
+| jenkins\_instance\_zone | The zone to deploy the Jenkins VM in | `any` | n/a | yes |
+| jenkins\_jobs | A list of Jenkins jobs to configure on the instance | `list` | `[]` | no |
+| jenkins\_network\_project\_id | The project ID of the Jenkins network | `string` | `""` | no |
+| jenkins\_service\_account\_display\_name | The display name of the service account to create for Jenkins VM provisioning | `string` | `"Jenkins"` | no |
+| jenkins\_service\_account\_name | The name of the service account to create for Jenkins VM provisioning | `string` | `"jenkins"` | no |
+| jenkins\_workers\_boot\_disk\_size\_gb | The size of Jenkins worker boot disks, in gigabytes | `string` | `"10"` | no |
+| jenkins\_workers\_boot\_disk\_source\_image | The fully qualified URL to the disk image to use as the boot disk for Jenkins workers | `string` | `"ubuntu-1604-xenial-v20181023"` | no |
+| jenkins\_workers\_boot\_disk\_source\_image\_project | The project within which the disk image to use as the Jenkins worker boot disk exists | `string` | `"ubuntu-os-cloud"` | no |
+| jenkins\_workers\_boot\_disk\_type | The boot disk type to associate with Jenkins workers. Valid options are 'local-ssd', 'pd-ssd', and 'pd-standard' | `string` | `"pd-ssd"` | no |
+| jenkins\_workers\_description | A description of the Jenkins worker cloud to show in Jenkins | `string` | `"Jenkins worker"` | no |
+| jenkins\_workers\_instance\_cap | The maximum number of GCE instances to create as Jenkins workers | `number` | `1` | no |
+| jenkins\_workers\_labels | GCP labels to apply to Jankins workers | `list(string)` | `[]` | no |
+| jenkins\_workers\_launch\_timeout\_seconds | The number of seconds to wait for a Jenkins worker to come online before timing out | `string` | `"300"` | no |
+| jenkins\_workers\_machine\_type | The machine type to deploy Jenkins workers onto | `string` | `"n1-standard-1"` | no |
+| jenkins\_workers\_min\_cpu\_platform | The [minimum CPU platform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform) to deploy Jenkins workers onto. Leave blank for no restriction. | `string` | `""` | no |
+| jenkins\_workers\_name\_prefix | A prefix for the Jenkins workers instance names | `string` | `"jenkins"` | no |
+| jenkins\_workers\_network | The URL of the network to deploy Jenkins workers into | `any` | n/a | yes |
+| jenkins\_workers\_network\_tags | A list of network tags to apply to Jenkins workers | `list(string)` | <pre>[<br>  "jenkins-agent"<br>]</pre> | no |
+| jenkins\_workers\_num\_executors | The number of concurrent jobs that can run on each Jenkins worker | `number` | `1` | no |
+| jenkins\_workers\_preemptible | Whether to launch Jenkins workers as preemptible instances | `string` | `"false"` | no |
+| jenkins\_workers\_project\_id | The GCP project to deploy Jenkins workers within | `any` | n/a | yes |
+| jenkins\_workers\_region | The name of the region into which to deploy Jenkins workers | `any` | n/a | yes |
+| jenkins\_workers\_retention\_time\_minutes | The number of minutes for Jenkins workers to remain online after completing their last job | `string` | `"6"` | no |
+| jenkins\_workers\_run\_as\_user | The user to run Jenkins jobs as on workers | `string` | `"ubuntu"` | no |
+| jenkins\_workers\_service\_account\_email | The service account email to assign to Jenkins workers. Leave blank for the default compute service account | `string` | `""` | no |
+| jenkins\_workers\_startup\_script | Any additional configuration to run on boot of Jenkins workers | `string` | `""` | no |
+| jenkins\_workers\_subnetwork | The name of the subnetwork to deploy Jenkins workers into | `string` | `"default"` | no |
+| jenkins\_workers\_zone | The name of the zone into which to deploy Jenkins workers | `string` | `"us-east4-b"` | no |
+| project\_id | The project ID to deploy to | `any` | n/a | yes |
+| region | The region to deploy to | `any` | n/a | yes |
 
 ## Outputs
 
