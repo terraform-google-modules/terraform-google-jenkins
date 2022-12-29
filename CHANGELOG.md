@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.1](https://github.com/terraform-google-modules/terraform-google-jenkins/compare/v1.2.0...v1.2.1) (2022-12-29)
+
+
+### Bug Fixes
+
+* Fix image, ssh key, and apt ([#27](https://github.com/terraform-google-modules/terraform-google-jenkins/issues/27)) ([ea9ebca](https://github.com/terraform-google-modules/terraform-google-jenkins/commit/ea9ebca0ad679f4524d2f53d79102f8c847082a6))
+* Update Bitnami Jenkins image ([#25](https://github.com/terraform-google-modules/terraform-google-jenkins/issues/25)) ([0801e7c](https://github.com/terraform-google-modules/terraform-google-jenkins/commit/0801e7c5e0e9b76c744af5da43602cbb79ed6e80))
+
 ## [Unreleased]
 
 ## [v1.2.0] - 2019-12-03
