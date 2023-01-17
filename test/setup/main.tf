@@ -63,6 +63,7 @@ module "jenkins_network" {
 // Create shared svpc service project and assign it to host project
 module "project" {
   source              = "terraform-google-modules/project-factory/google//modules/shared_vpc"
+  version             = "~> 3.0"
   name                = "ci-jenkins"
   random_project_id   = true
   org_id              = var.org_id
