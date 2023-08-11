@@ -26,7 +26,7 @@ resource "google_folder" "ci_jenkins_folder" {
 // Create Shared VPC host and service projects to test shared vpc example.
 module "jenkins_svpc_host_project" {
   source            = "terraform-google-modules/project-factory/google"
-  version           = "~> 14.3"
+  version           = "~> 3.0"
   name              = "ci-jenkins-svpc-host"
   random_project_id = true
   org_id            = var.org_id
@@ -45,7 +45,7 @@ module "jenkins_svpc_host_project" {
 enable the Shared VPC feature for a created project, assigning it as a Shared VPC host project. */
 module "jenkins_network" {
   source          = "terraform-google-modules/network/google"
-  version         = "~> 7.2.0"
+  version         = "~> 1.5.0"
   project_id      = module.jenkins_svpc_host_project.project_id
   network_name    = "jenkins-network-${random_id.folder_rand.hex}"
   shared_vpc_host = true
@@ -62,7 +62,8 @@ module "jenkins_network" {
 
 // Create shared svpc service project and assign it to host project
 module "project" {
-  source              = "terraform-google-modules/project-factory/google//modules/svpc_service_project"
+  source              = "terraform-google-modules/project-factory/google//modules/shared_vpc"
+  version             = "~> 3.0"
   name                = "ci-jenkins"
   random_project_id   = true
   org_id              = var.org_id
