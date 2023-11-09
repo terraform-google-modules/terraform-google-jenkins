@@ -34,7 +34,8 @@ jobs:
       - uses: 'actions/checkout@v4'
       - id: variables
         run: |
-          MAKEFILE=$(find . -name Makefile -print -quit)
+          # Find the Makefile only in the root directory
+          MAKEFILE=$(find . -maxdepth 1 -name Makefile -print -quit)
           if [ -z "$MAKEFILE" ]; then
             echo dev-tools=gcr.io/cloud-foundation-cicd/cft/developer-tools:1 >> "$GITHUB_OUTPUT"
           else
