@@ -40,3 +40,9 @@ variable "bucket_name" {
   type        = string
 }
 
+variable "bucket_location" {
+  description = "The bucket location"
+  type        = string
+  default     = "us-central1"
+}
+

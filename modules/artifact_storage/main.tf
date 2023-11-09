@@ -19,6 +19,7 @@ resource "google_storage_bucket" "artifacts" {
   name          = var.bucket_name
   project       = var.project_id
   force_destroy = true
+  location      = var.bucket_location
 }
 
 data "local_file" "artifact_upload_job_template" {
