@@ -24,7 +24,8 @@ locals {
 }
 
 module "artifacts" {
-  source = "../../modules/artifact_storage"
+  source  = "terraform-google-modules/jenkins/google//modules/artifact_storage"
+  version = "~> 1.0"
 
   project_id  = var.project_id
   jobs_count  = 1
@@ -48,7 +49,9 @@ EOF
 
 
 module "jenkins-gce" {
-  source                               = "../../"
+  source  = "terraform-google-modules/jenkins/google"
+  version = "~> 1.0"
+
   project_id                           = var.project_id
   jenkins_network_project_id           = var.svpc_host_project_id
   region                               = "us-east4"

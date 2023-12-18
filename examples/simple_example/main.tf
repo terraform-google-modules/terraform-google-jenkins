@@ -24,7 +24,8 @@ locals {
 }
 
 module "artifacts" {
-  source = "../../modules/artifact_storage"
+  source  = "terraform-google-modules/jenkins/google//modules/artifact_storage"
+  version = "~> 1.0"
 
   project_id  = var.project_id
   jobs_count  = 1
@@ -52,7 +53,9 @@ data "google_compute_image" "jenkins_agent" {
 }
 
 module "jenkins-gce" {
-  source                                         = "../../"
+  source  = "terraform-google-modules/jenkins/google"
+  version = "~> 1.0"
+
   project_id                                     = var.project_id
   region                                         = var.region
   jenkins_instance_zone                          = var.jenkins_instance_zone
