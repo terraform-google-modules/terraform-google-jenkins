@@ -45,7 +45,7 @@ module "jenkins_svpc_host_project" {
 enable the Shared VPC feature for a created project, assigning it as a Shared VPC host project. */
 module "jenkins_network" {
   source          = "terraform-google-modules/network/google"
-  version         = "~> 1.5.0"
+  version         = "~> 12.0.0"
   project_id      = module.jenkins_svpc_host_project.project_id
   network_name    = "jenkins-network-${random_id.folder_rand.hex}"
   shared_vpc_host = true
