@@ -60,6 +60,15 @@ Please see the [examples](./examples/) folder.
 | project\_id | The project ID to deploy to | string | n/a | yes |
 | region | The region to deploy to | string | n/a | yes |
 
+### Note on Jenkins image defaults
+
+The default value for `jenkins_boot_disk_source_image` points to a specific Bitnami image.
+Bitnami images may be removed or renamed over time, which can cause image lookup failures.
+
+For long-term stability, consider explicitly setting
+`jenkins_boot_disk_source_image` and `jenkins_boot_disk_source_image_project`,
+or switching to an image family if available.
+
 ## Outputs
 
 | Name | Description |
