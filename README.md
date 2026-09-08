@@ -19,7 +19,7 @@ Please see the [examples](./examples/) folder.
 |------|-------------|:----:|:-----:|:-----:|
 | create\_firewall\_rules | If worker firewall rules should be created | bool | `"false"` | no |
 | gcs\_bucket | The name of an existing GCS bucket to associate with the created service account, allowing build artifacts to be uploaded. Leave blank to skip | string | `""` | no |
-| jenkins\_boot\_disk\_source\_image | The name of the disk image to use as the boot disk for the Jenkins master | string | `"bitnami-jenkins-2-176-2-0-linux-debian-9-x86-64"` | no |
+| jenkins\_boot\_disk\_source\_image | The name of the disk image to use as the boot disk for the Jenkins master | string | `"bitnami-jenkins-2-204-2-1-linux-debian-9-x86-64"` | no |
 | jenkins\_boot\_disk\_source\_image\_project | The project within which the disk image to use as the Jenkins master boot disk exists | string | `"bitnami-launchpad"` | no |
 | jenkins\_initial\_password | The initial password to protect Jenkins logins with. Defaults to a random 8-character alphanumeric string. This may not contain special characters. | string | `""` | no |
 | jenkins\_instance\_access\_cidrs | CIDRs to allow to access Jenkins over HTTP(s) | list(string) | `<list>` | no |
@@ -59,6 +59,15 @@ Please see the [examples](./examples/) folder.
 | jenkins\_workers\_zone | The name of the zone into which to deploy Jenkins workers | string | `"us-east4-b"` | no |
 | project\_id | The project ID to deploy to | string | n/a | yes |
 | region | The region to deploy to | string | n/a | yes |
+
+### Note on Jenkins image defaults
+
+The default value for `jenkins_boot_disk_source_image` points to a specific Bitnami image.
+Bitnami images may be removed or renamed over time, which can cause image lookup failures.
+
+For long-term stability, consider explicitly setting
+`jenkins_boot_disk_source_image` and `jenkins_boot_disk_source_image_project`,
+or switching to an image family if available.
 
 ## Outputs
 
